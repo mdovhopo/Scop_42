@@ -1,21 +1,26 @@
 # LINUX UBUNTU 18.04.2 LTS Makfile by mdovhopo@student.unit.ua
 
-CFLAGS = -c -Wall -O3
+CFLAGS 			= -c -Wall
 
-INCLUDE_DIRS = 
-FRAMEWORKS = -lglfw3 -lGL -lm -lXrandr -lXi -lX11 -lXxf86vm -lpthread -ldl
-STANDARTS = -std=c99
+INCLUDE_DIRS	= -I ./lib/glad/include \
+				  -I ./inc
 
-SOURCE_DIR = src
+FRAMEWORKS		= -lglfw3 -lGL -lm -lXrandr -lXi -lX11 -lXxf86vm -lpthread -ldl
+GLAD			= ./lib/glad/src/glad.c
 
-INCLUDES =	
+STD 			= -std=c99
 
-SOURCES = $(addprefix $(SOURCE_DIR)/, 	main.c)
+SOURCE_DIR			= src
+SOURCES			= $(wildcard src/main/*.c)
+SOURCES		   += $(wildcard src/utils/*.c)
+SOURCES		   += $(wildcard src/shaders/*.c)
+SOURCES		   += $(GLAD)
+OBJECTS			= $(SOURCES:.c=.o)
 
-OBJECTS = $(SOURCES:.c=.o)
+INCLUDES		=
 
-CC = clang
-EXECUTABLE = sad_cat
+CC				= clang
+EXECUTABLE		= sad_cat
 
 .PHONY: all multi
 
@@ -25,10 +30,10 @@ multi:
 all: $(SOURCES) $(EXECUTABLE)
 	
 $(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(STANDARTS) $(FLAGS) $(INCLUDE_DIRS) $(OBJECTS) $(FRAMEWORKS) -o $@ 
+	$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(OBJECTS) $(FRAMEWORKS) -o $@ -g
 
-.cpp.o: $(INCLUDES)
-	$(CC) $(STANDARTS) $(FLAGS) $(INCLUDE_DIRS) $(CFLAGS) $< -o $@
+%.o: %.c $(INCLUDES)
+	$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(CFLAGS) $< -o $@ -g
 
 clean:
 	@/bin/rm -f $(OBJECTS)
