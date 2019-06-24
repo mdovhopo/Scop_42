@@ -22,7 +22,10 @@ bool	gl_init(const char *window_name,
 				const uint32_t w,
 				const uint32_t h,
 				GLFWwindow **win);
-bool	compile_shader(uint32_t *shader_id, const char* source, int32_t type);
+bool	compile_shader(	uint32_t *shader_id,
+						const char* source,
+						int32_t type,
+						const char* name);
 bool	link_shader_prog(uint32_t *prog_id, uint32_t *shaders, uint32_t length);
 
 /*

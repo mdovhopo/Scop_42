@@ -7,6 +7,7 @@ void processInput(GLFWwindow *window)
 }
 
 const float vertices[] = {
+// 	 x		y	  z
     -0.5f, -0.5f, 0.0f,
      0.5f, -0.5f, 0.0f,
      0.0f,  0.5f, 0.0f
@@ -32,9 +33,9 @@ int main(void)
 	vertShaderCode = read_file(VERTEX_SHADER_PATH);
 
 	// Compile shaders
-	if(!compile_shader(&vertShaderId, vertShaderCode, GL_VERTEX_SHADER))
+	if(!compile_shader(&vertShaderId, vertShaderCode, GL_VERTEX_SHADER, VERTEX_SHADER_PATH))
 		return (-1);
-	if (!compile_shader(&fragShaderId, fragShaderCode, GL_FRAGMENT_SHADER))
+	if (!compile_shader(&fragShaderId, fragShaderCode, GL_FRAGMENT_SHADER, FRAGMENT_SHADER_PATH))
 		return (-1);
 	free(vertShaderCode);
 	free(fragShaderCode);

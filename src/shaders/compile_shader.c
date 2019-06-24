@@ -1,6 +1,6 @@
 #include "scop.h"
 
-bool	compile_shader(uint32_t *shader_id, const char* source, int32_t type)
+bool	compile_shader(uint32_t *shader_id, const char* source, int32_t type, const char* name)
 {
 	int		success;
 	char	infoLog[512];
@@ -12,7 +12,7 @@ bool	compile_shader(uint32_t *shader_id, const char* source, int32_t type)
 	if (!success)
 	{
 		glGetShaderInfoLog(*shader_id, 512, NULL, infoLog);
-		printf("SHADER ERROR: [%s]", infoLog);
+		printf("in %s: %s", name, infoLog);
 		return (false);
 	}
 	return (true);
