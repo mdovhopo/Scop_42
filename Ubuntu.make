@@ -22,10 +22,7 @@ INCLUDES		=
 CC				= clang
 EXECUTABLE		= sad_cat
 
-.PHONY: all multi
 
-multi:
-	@$(MAKE) -j8 all
 
 all: $(SOURCES) $(EXECUTABLE)
 	
@@ -40,4 +37,4 @@ clean:
 fclean: clean
 	@/bin/rm -f $(EXECUTABLE)
 
-re: fclean multi
+re: fclean all
