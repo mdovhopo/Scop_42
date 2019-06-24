@@ -4,13 +4,25 @@ void processInput(GLFWwindow *window)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 }
 
 const float vertices[] = {
 // 	 x		y	  z
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
+     0.5f,  0.5f, 0.0f,  // top right
+     0.5f, -0.5f, 0.0f,  // bottom right
+    -0.5f, -0.5f, 0.0f,  // bottom left
+    -0.5f,  0.5f, 0.0f   // top left 
+};
+
+const uint32_t indices[] = {
+	0, 1, 3,
+	1, 2, 3
 };
 
 int main(void)
@@ -42,21 +54,28 @@ int main(void)
 	// Link Program
 	if (!link_shader_prog(&shaderProg, (uint32_t[]){vertShaderId, fragShaderId}, 2))
 		return (-1);
+	glDeleteShader(vertShaderId);
+	glDeleteShader(fragShaderId);  
 
-	uint32_t vbo;
-	glGenBuffers(1, &vbo);
-
-	uint32_t vao;
+	uint32_t vao; // vertex_attrib_arr
+	uint32_t ebo; // element_buffer_obj
+	uint32_t vbo; // vertex_buffer_object
 	glGenVertexArrays(1, &vao);
+	glGenBuffers(1, &vbo);
+	glGenBuffers(1, &ebo);
 
 	glBindVertexArray(vao);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), vertices, GL_STATIC_DRAW);
+	// glBindVertexArray(vao);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(float), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(float), indices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 	glEnableVertexAttribArray(0);
 
-	glBindVertexArray(vao);
 	glUseProgram(shaderProg);
 	while (!glfwWindowShouldClose(window))
 	{
@@ -64,13 +83,11 @@ int main(void)
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
-	glDeleteShader(vertShaderId);
-	glDeleteShader(fragShaderId);  
 	glfwTerminate();
 	printf("#### IT IS FINNALY ENDED! ####\n");
 	return (0);
