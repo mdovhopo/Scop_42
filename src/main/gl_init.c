@@ -15,6 +15,9 @@ bool	gl_init(const char *window_name,
 				const uint32_t h,
 				GLFWwindow **win)
 {
+	int width;
+	int height;
+
 	if (!glfwInit()) {
 		return (false);
 	}
@@ -26,10 +29,11 @@ bool	gl_init(const char *window_name,
 	*win = glfwCreateWindow(w, h, "Scop", NULL, NULL);
 	if (!*win)
 		return (gl_error_report("Could not create window :(", -1));
+	glfwGetFramebufferSize(*win, &width, &height);
 	glfwMakeContextCurrent(*win);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		return (gl_error_report("Could not load GL functions :(", -1));
-	glViewport(0, 0, w, h);
+	glViewport(0, 0, width, height);
 	glfwSetFramebufferSizeCallback(*win, framebuffer_size_callback); 
 	return (true);
 }
