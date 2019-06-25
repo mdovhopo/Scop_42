@@ -4,28 +4,35 @@
 
 # Get OS name
 UNAME_S			= $(shell uname -s)
+LIB_DIR			= ./lib
 
 # Different lib linking for Linux and OSX
 ifeq ($(UNAME_S), Linux)
 	OS_NAME		= Linux
-	FRAMEWORKS	= -lglfw3 -lGL -lm \
+	LIBS	= -lglfw3 -lGL -lm \
 				-lXrandr -lXi -lX11 \
 				-lXxf86vm -lpthread -ldl
 endif
 ifeq ($(UNAME_S), Darwin)
 	OS_NAME		= OSX
-	FRAMEWORKS	= -L ./lib/glfw-3.3-MacOS-10.13/src -lglfw3 \
+	LIBS	= -L $(LIB_DIR)/glfw-3.3-MacOS-10.13/src -lglfw3 \
 				-framework Cocoa \
 				-framework OpenGL \
 				-framework IOKit \
 				-framework CoreVideo
-	INCLUDE_DIRS+= -I ./lib/glfw-3.3-MacOS-10.13/include
+	INCLUDE_DIRS+= -I $(LIB_DIR)/glfw-3.3-MacOS-10.13/include
 endif
 
-INCLUDE_DIRS   += -I ./lib/glad/include \
-				  -I ./inc
+LIBFT_PATH		= $(LIB_DIR)/libft
+LIBFT_BIN		= $(LIBFT_PATH)/libft.a
 
-GLAD_SRC		= ./lib/glad/src/glad.c
+LIBS		   += -L $(LIBFT_PATH) -lft
+
+INCLUDE_DIRS   += -I $(LIB_DIR)/glad/include \
+				  -I ./inc \
+				  -I $(LIBFT_PATH)/inc
+
+GLAD_SRC		= $(LIB_DIR)/glad/src/glad.c
 
 STD 			= -std=c99
 
@@ -42,17 +49,18 @@ CFLAGS 			= -c -Wall
 CC				= clang
 EXECUTABLE		= sad_cat
 
-.PHONY: all multi clean
+.PHONY: all clean
 
-multi:
-	@$(MAKE) -s -j8 all
 
-all: $(SOURCES) $(EXECUTABLE)
-	@echo "\033[92m[All done]\033[0m"
+all: $(EXECUTABLE)
+	@echo "\033[92m[$(EXECUTABLE) done]\033[0m"
 
-$(EXECUTABLE): $(OBJECTS) 
+$(LIBFT_BIN):
+	@$(MAKE) -s -C $(LIBFT_PATH)
+
+$(EXECUTABLE): $(OBJECTS) $(LIBFT_BIN)
 	@echo "[Compiling target $@ for $(OS_NAME)]"
-	@$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(OBJECTS) $(FRAMEWORKS) -o $@
+	@$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(OBJECTS) $(LIBS) -o $@
 	@echo "\033[92m[Target $(EXECUTABLE) Has been created, run ./$@]\033[0m"
 
 %.o: %.c $(INCLUDES)
@@ -61,13 +69,15 @@ $(EXECUTABLE): $(OBJECTS)
 
 clean:
 	@/bin/rm -f $(OBJECTS)
+	@$(MAKE) -s -C $(LIBFT_PATH) clean
 	@echo "\033[92m[all *.o files deleted!]\033[0m"
 
 fclean: clean
 	@/bin/rm -f $(EXECUTABLE)
+	@/bin/rm -f $(LIBFT_BIN)
 	@echo "\033[92m[$(EXECUTABLE) deleted!]\033[0m"
 
-re: fclean multi
+re: fclean all
 
 magic:
 	clear
