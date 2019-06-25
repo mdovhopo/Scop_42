@@ -41,8 +41,8 @@ int main(void)
 	// Read shaders from source
 
 	// TODO make gl_env struct and move all this stuff to gl_init
-	fragShaderCode = read_file(FRAGMENT_SHADER_PATH);
-	vertShaderCode = read_file(VERTEX_SHADER_PATH);
+	fragShaderCode = ft_read_file(FRAGMENT_SHADER_PATH);
+	vertShaderCode = ft_read_file(VERTEX_SHADER_PATH);
 
 	// Compile shaders
 	if(!compile_shader(&vertShaderId, vertShaderCode, GL_VERTEX_SHADER, VERTEX_SHADER_PATH))
