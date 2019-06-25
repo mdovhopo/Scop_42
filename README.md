@@ -1,7 +1,7 @@
 # Scop_42
 OpenGL project by 42
 
-This project written using C99 and OpenGL 4.1 with GLSL 4.1
+This project is written using C99 and OpenGL 4.1 with GLSL 4.1
 
 First you need to obtain copy of this repository
 
