@@ -34,7 +34,7 @@ int main(void)
 	uint32_t	fragShaderId;
 	uint32_t	shaderProg;
 
-	printf("####       Start        ####\n");
+	ft_printf("####       Start        ####\n");
 	if (!gl_init("Scop", 800, 600, &window))
 		return (gl_error_report("OpenGL could not init :(", -1));
 	print_gl_info();
@@ -90,6 +90,6 @@ int main(void)
 		glfwPollEvents();
 	}
 	glfwTerminate();
-	printf("#### IT IS FINNALY ENDED! ####\n");
+	ft_printf("#### IT IS FINNALY ENDED! ####\n");
 	return (0);
 }

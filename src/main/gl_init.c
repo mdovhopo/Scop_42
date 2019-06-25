@@ -2,7 +2,7 @@
 
 void	error_callback(int error, const char* description)
 {
-	printf("Error: %s\n", description);
+	ft_printf("Error: %s\n", description);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

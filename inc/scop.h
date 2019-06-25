@@ -1,14 +1,9 @@
 #ifndef SCOP_H
 # define SCOP_H
 
+# include "libft.h"
+
 # include <stdio.h>
-# include <string.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <sys/stat.h>
-# include <stdbool.h>
-# include <math.h>
 # include <glad/glad.h>
 # include <GLFW/glfw3.h>
 

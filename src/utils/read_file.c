@@ -2,7 +2,7 @@
 
 static void	*error_report(const char *msg)
 {
-	printf("read_file error [%s]\n", msg);
+	ft_printf("read_file error [%s]\n", msg);
 	return NULL;
 }
 

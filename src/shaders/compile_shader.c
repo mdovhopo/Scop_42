@@ -12,7 +12,7 @@ bool	compile_shader(uint32_t *shader_id, const char* source, int32_t type, const
 	if (!success)
 	{
 		glGetShaderInfoLog(*shader_id, 512, NULL, infoLog);
-		printf("in %s: %s", name, infoLog);
+		ft_printf("in %s: %s", name, infoLog);
 		return (false);
 	}
 	return (true);

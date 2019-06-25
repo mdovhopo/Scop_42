@@ -14,7 +14,7 @@ bool	link_shader_prog(uint32_t *prog_id, uint32_t *shaders, uint32_t length)
 	glGetProgramiv(*prog_id, GL_LINK_STATUS, &success);
 	if (!success) {
 		glGetProgramInfoLog(*prog_id, 512, NULL, infoLog);
-		printf("PROGRAM LINK ERR: |%s|\n", infoLog);
+		ft_printf("PROGRAM LINK ERR: |%s|\n", infoLog);
 		return (false);
 	}
 	return (true);
