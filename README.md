@@ -1,20 +1,40 @@
 # Scop_42
 OpenGL project by 42
 
+This project written using C99 and OpenGL 4.1 with GLSL 4.1
+
+First you need to obtain copy of this repository
+
+```sh
+
+git clone https://github.com/mdovhopo/Scop_42
+
+```
+
 ## TODO
  remove glwf source code from project
 
 ## Compile
 
-### Linux (Ubuntu 18.04 LTS)
+You can build this project for 
+
+* Linux (Ubuntu 18.04 LTS)
+* MacOS (10.13 High Sierra)
+
+To build project:
 
 ```sh
-    make -f Ubuntu.make
+make
 ```
 
-### MacOS (10.13 High Sierra)
+To rebuild project:
 
 ```sh
-    make -f MacOS.make
+make re
 ```
 
+Clean project:
+
+```sh
+make fclean
+```
