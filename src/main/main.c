@@ -2,6 +2,8 @@
 
 void processInput(GLFWwindow *window)
 {
+	static float opacity = 1.0f;
+
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
@@ -10,6 +12,10 @@ void processInput(GLFWwindow *window)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		glfwSetWindowOpacity(window, clamp(0, 1, opacity += 0.1f));
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		glfwSetWindowOpacity(window, clamp(0, 1, opacity -= 0.1f));
 }
 
 const float vertices[] = {
@@ -65,7 +71,6 @@ int main(void)
 	glGenBuffers(1, &ebo);
 
 	glBindVertexArray(vao);
-	// glBindVertexArray(vao);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(float), vertices, GL_STATIC_DRAW);
@@ -90,6 +95,6 @@ int main(void)
 		glfwPollEvents();
 	}
 	glfwTerminate();
-	ft_printf("#### IT IS FINNALY ENDED! ####\n");
+	ft_printf("#### IT IS FINALLY ENDED! ####\n");
 	return (0);
 }
