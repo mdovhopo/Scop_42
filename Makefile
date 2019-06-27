@@ -46,7 +46,7 @@ OBJECTS			= $(SOURCES:.c=.o)
 INCLUDES		=
 
 CFLAGS 			= -c -Wall
-CC				= clang
+CC				= clang -g
 EXECUTABLE		= sad_cat
 
 .PHONY: all clean

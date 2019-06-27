@@ -31,7 +31,27 @@ const uint32_t indices[] = {
 	1, 2, 3
 };
 
-int main(void)
+// TODO check if this stuff works on macos
+
+int main()
+{
+	mat4 m1 = mat_scale(VEC(1, 2, 3, 1));
+	mat4 m2 = (mat4){
+		1, 0, 9, 1,
+		0, 2, 0, 1,
+		6, 0, 3, 1,
+		0, 1, 0, 4};
+	vec4 v = VEC(1, 2, 3, 4);
+	// mat4 m2 = m1 * 3;
+	// ft_printf("%m", m2);
+	// mat4 m = identity_mat();
+	mat4 m = mat_translation(v);
+	ft_printf("%m %f", m, M_PI);
+
+
+}
+
+int main_test(void)
 {
 	GLFWwindow	*window;
 	char		*vertShaderCode;
