@@ -158,7 +158,7 @@ int main(void)
 		trans = mat_rotate_y(trans, (float)glfwGetTime());
 		glUniformMatrix4fv(trans_loc, 1, GL_FALSE, (float*)&trans);
 		processInput(window);
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(68 / (float)255, 85 / (float)255, 90 / (float)255, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
 		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
