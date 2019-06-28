@@ -100,7 +100,7 @@ int main(void)
 	uint32_t	shaderProg;
 
 	ft_printf("####       Start        ####\n");
-	if (!gl_init("Scop", 800, 600, &window))
+	if (!gl_init("Scop", 800, 800, &window))
 		return (gl_error_report("OpenGL could not init :(", -1));
 	glEnable              ( GL_DEBUG_OUTPUT );
 	glDebugMessageCallback( MessageCallback, 0 );
