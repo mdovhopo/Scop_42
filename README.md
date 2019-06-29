@@ -21,6 +21,8 @@ You can build this project for
 * Linux (Ubuntu 18.04 LTS)
 * MacOS (10.13 High Sierra)
 
+You also can try to build it for another linux distributives or macos versions but i haven't tested it
+
 To build project:
 
 ```sh
