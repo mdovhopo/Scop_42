@@ -15,12 +15,13 @@ ifeq ($(UNAME_S), Linux)
 endif
 ifeq ($(UNAME_S), Darwin)
 	OS_NAME		= OSX
-	LIBS	= -L $(LIB_DIR)/glfw-3.3-MacOS-10.13/src -lglfw3 \
+	GLFW_DIR = $(LIB_DIR)/glfw-3.3-MacOS-10.13-Compiled
+	LIBS	= -L $(GLFW_DIR)/src -lglfw3 \
 				-framework Cocoa \
 				-framework OpenGL \
 				-framework IOKit \
 				-framework CoreVideo
-	INCLUDE_DIRS+= -I $(LIB_DIR)/glfw-3.3-MacOS-10.13/include
+	INCLUDE_DIRS+= -I $(GLFW_DIR)/include
 endif
 
 LIBFT_PATH		= $(LIB_DIR)/libft
@@ -60,12 +61,12 @@ $(LIBFT_BIN):
 
 $(EXECUTABLE): $(OBJECTS) $(LIBFT_BIN)
 	@echo "[Compiling target $@ for $(OS_NAME)]"
-	@$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(OBJECTS) $(LIBS) -o $@
+	$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(OBJECTS) $(LIBS) -o $@
 	@echo "\033[92m[Target $(EXECUTABLE) Has been created, run ./$@]\033[0m"
 
 %.o: %.c $(INCLUDES)
 	@echo "[Compiling] $@"
-	@$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(CFLAGS) $< -o $@
+	$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(CFLAGS) $< -o $@
 
 clean:
 	@/bin/rm -f $(OBJECTS)

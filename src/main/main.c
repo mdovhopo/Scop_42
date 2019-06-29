@@ -13,9 +13,9 @@ void processInput(GLFWwindow *window)
 	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-		glfwSetWindowOpacity(window, clamp(0, 1, opacity += 0.1f));
+		glfwSetWindowOpacity(window, clamp(0, 1, opacity += 0.01f));
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		glfwSetWindowOpacity(window, clamp(0, 1, opacity -= 0.1f));
+		glfwSetWindowOpacity(window, clamp(0, 1, opacity -= 0.01f));
 }
 
 const float vertices[] = {
@@ -62,33 +62,10 @@ const float vertices[] = {
     1.0f,-1.0f, 1.0f,      0.982f,  0.099f,  0.879f
 };
 
-
-
 const uint32_t indices[] = {
 	0, 1, 3,
 	1, 2, 3
 };
-
-// TODO check if this stuff works on macos
-
-int main_test()
-{
-
-}
-
-void GLAPIENTRY
-MessageCallback( GLenum source,
-                 GLenum type,
-                 GLuint id,
-                 GLenum severity,
-                 GLsizei length,
-                 const GLchar* message,
-                 const void* userParam )
-{
-  fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-            type, severity, message );
-}
 
 int main(void)
 {
@@ -102,8 +79,6 @@ int main(void)
 	ft_printf("####       Start        ####\n");
 	if (!gl_init("Scop", 800, 800, &window))
 		return (gl_error_report("OpenGL could not init :(", -1));
-	glEnable              ( GL_DEBUG_OUTPUT );
-	glDebugMessageCallback( MessageCallback, 0 );
 	print_gl_info();
 	// Read shaders from source
 
@@ -143,8 +118,6 @@ int main(void)
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
-
-	// trying to pass matrix to gls
 
 	glUseProgram(shaderProg);
 	uint32_t trans_loc = glGetUniformLocation(shaderProg, "transform");

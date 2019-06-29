@@ -18,6 +18,8 @@
 # Libraries
 *.lib
 *.a
+# on MacOS machine I don't have root rights, so i had to carry compiled glfw lib
+!libglfw3.a
 *.la
 *.lo
 
