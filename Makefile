@@ -1,4 +1,15 @@
-# Makfile by mdovhopo@student.unit.ua
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/06/29 15:11:01 by mdovhopo          #+#    #+#              #
+#    Updated: 2019/06/29 15:11:16 by mdovhopo         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # This Makefile was tested for:
 # LINUX UBUNTU 18.04.2 LTS and MacOS 10.13.3 High Sierra
 
