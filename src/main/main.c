@@ -1,6 +1,6 @@
 #include "scop.h"
 
-void processInput(GLFWwindow *window)
+void processInput(GLFWwindow *window, float *far)
 {
 	static float opacity = 1.0f;
 
@@ -16,6 +16,10 @@ void processInput(GLFWwindow *window)
 		glfwSetWindowOpacity(window, clamp(0, 1, opacity += 0.01f));
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		glfwSetWindowOpacity(window, clamp(0, 1, opacity -= 0.01f));
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+		*far = clamp(-10, 10, *far += 0.1);
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		*far = clamp(-10, 10, *far -= 0.1);
 }
 
 const float vertices[] = {
@@ -128,21 +132,22 @@ int main(void)
 	if (glGetError() != GL_NO_ERROR)
 		ft_printf("WARNING glError: %d", glGetError());
 	int i = 0;
+	float far = -5;
 	while (!glfwWindowShouldClose(window))
 	{
 		mat4 model = mat_identity();
-		model = mat_rotate_y(model, (float)glfwGetTime() * DEG_TO_RAD(50.0f));
+		model = mat_rotate(model, VEC(0.5f, 1.0f, 0.0f, 1.0f), (float)glfwGetTime() * DEG_TO_RAD(50.0f));
+		// model = mat_scale(model, VEC(0.3, 0.3, 0.3, 1));
 		mat4 view = mat_identity();
-		view = mat_translate(view, VEC(0, 0, 1, 0));
-		mat4 proj = mat_perspective(60.0f, 0.1f, 100.0f);
+		view = mat_translate(view, VEC(0, 0, far, 1));
+		mat4 proj = mat_identity();
+		proj = mat_perspective(45.0f, 1, 0.1f, 1000.0f);
 		if (i++ < 1)
-			ft_printf("%m", model);
+			ft_printf("%m", proj);
 		glUniformMatrix4fv(model_loc, 1, GL_FALSE, (float*)&model);
 		glUniformMatrix4fv(view_loc, 1, GL_FALSE, (float*)&view);
 		glUniformMatrix4fv(proj_loc, 1, GL_FALSE, (float*)&proj);
-		if (glGetError() != GL_NO_ERROR)
-			printf("ERROR: %d", glGetError());
-		processInput(window);
+		processInput(window, &far);
 		glClearColor(68 / (float)255, 85 / (float)255, 90 / (float)255, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glDrawArrays(GL_TRIANGLES, 0, 12 * 3);

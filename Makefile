@@ -72,12 +72,12 @@ $(LIBFT_BIN):
 
 $(EXECUTABLE): $(OBJECTS) $(LIBFT_BIN)
 	@echo "[Compiling target $@ for $(OS_NAME)]"
-	$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(OBJECTS) $(LIBS) -o $@
+	@$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(OBJECTS) $(LIBS) -o $@
 	@echo "\033[92m[Target $(EXECUTABLE) Has been created, run ./$@]\033[0m"
 
 %.o: %.c $(INCLUDES)
 	@echo "[Compiling] $@"
-	$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(CFLAGS) $< -o $@
+	@$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(CFLAGS) $< -o $@
 
 clean:
 	@/bin/rm -f $(OBJECTS)
