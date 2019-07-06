@@ -6,6 +6,8 @@
 # include <stdio.h>
 # include <glad/glad.h>
 # include <GLFW/glfw3.h>
+# include <cglm/cglm.h>
+
 
 #define VERTEX_SHADER_PATH "./src/shaders/vertShader.vert"
 #define FRAGMENT_SHADER_PATH "./src/shaders/fragShader.frag"

@@ -1,25 +1,27 @@
 #include "scop.h"
 
-void processInput(GLFWwindow *window, float *far)
+void processInput(GLFWwindow *window, float *angle_x, float *angle_y, float *far)
 {
-	static float opacity = 1.0f;
-
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-		glfwSetWindowOpacity(window, clamp(0, 1, opacity += 0.01f));
+		*angle_y = clamp(0, 360, *angle_y -= 1);
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		glfwSetWindowOpacity(window, clamp(0, 1, opacity -= 0.01f));
+		*angle_y = clamp(0, 360, *angle_y += 1);
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		*far = clamp(-10, 10, *far += 0.1);
+		*angle_x = clamp(0, 360, *angle_x += 1);
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		*far = clamp(-10, 10, *far -= 0.1);
+		*angle_x = clamp(0, 360, *angle_x -= 1);
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+		*far = clamp(-10, 10, *far += 0.01f);
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		*far = clamp(-10, 10, *far -= 0.01f);
 }
 
 const float vertices[] = {
@@ -70,8 +72,35 @@ const uint32_t indices[] = {
 	0, 1, 3,
 	1, 2, 3
 };
+// TODO refactor vec and mat as aligned float arrays
+int main(void) {
+	float angle_x = 45;
+	float angle_y = 45;
+	float far = -5;
+	t_mat4 t_model = mat_identity();
+	t_model = mat_rotate(t_model, VEC(0, 1, 0, 1), DEG_TO_RAD(angle_x));
+	t_model = mat_rotate(t_model, VEC(1, 0, 0, 1), DEG_TO_RAD(angle_y));
+	float test_model[4][4] = {0};
+	for (int i = 0; i < 4 ; i++)
+		for (int j = 0; j < 4; j++)
+			test_model[i][j] = t_model[j * 4 + i];
+	mat4 model;
+	glm_mat4_identity(model);
+	glm_rotate(model, glm_rad(angle_x), (vec3){0, 1, 0});
+	glm_rotate(model, glm_rad(angle_y), (vec3){1, 0, 0});
+	t_mat4 t_view = mat_identity();
+	t_view = mat_translate(t_view, VEC(0, 0, far, 1));
+	mat4 view;//
+	glm_mat4_identity(view);
+	glm_translate(view, (vec3){0, 0, far});
+	mat4 proj;
+	glm_mat4_identity(proj);
+	glm_perspective(glm_rad(45.0f), 1, 0.1f, 100.0f, proj);
+	glm_mat4_print(view, stdout);
+	ft_printf("My\n%+m", t_view);
+}
 
-int main(void)
+int main_test(void)
 {
 	GLFWwindow	*window;
 	char		*vertShaderCode;
@@ -131,23 +160,46 @@ int main(void)
 	glEnable(GL_DEPTH_TEST);
 	if (glGetError() != GL_NO_ERROR)
 		ft_printf("WARNING glError: %d", glGetError());
-	int i = 0;
+	float angle_x = 45;
+	float angle_y = 45;
 	float far = -5;
+	// mat4 proj, view, model;
+	// glm_mat4_identity(proj);
+	// glm_mat4_identity(view);
+	// glm_mat4_identity(model);
+	// // glm_translate(model, (vec3){1, 2, 3});
+	// glm_rotate(model, glm_rad(45.0f) , (vec3){1, 2, 3});
+	// t_mat4 t_proj = mat_identity();
+	// t_mat4 t_view = mat_identity();
+	// t_mat4 t_model = mat_identity();
+	// // t_model = mat_translate(t_model, VEC(1, 2, 3, 1));
+	// t_model = mat_rotate(t_model, VEC(1, 2, 3, 1), DEG_TO_RAD(45.0f));
+	// ft_printf("My\n%m", t_model);
+	// glm_mat4_print(model, stdout);
+	int i = 0;
+	t_mat4 t_model = mat_identity();
+	t_model = mat_rotate(t_model, VEC(0, 1, 0, 1), DEG_TO_RAD(angle_x));
+	t_model = mat_rotate(t_model, VEC(1, 0, 0, 1), DEG_TO_RAD(angle_y));
+	mat4 model;
+	glm_mat4_identity(model);
+	glm_rotate(model, glm_rad(angle_x), (vec3){0, 1, 0});
+	glm_rotate(model, glm_rad(angle_y), (vec3){1, 0, 0});
+	t_mat4 t_view = mat_identity();
+	t_view = mat_translate(t_view, VEC(0, 0, far, 1));
+	mat4 view;//
+	glm_mat4_identity(view);
+	glm_translate(view, (vec3){0, 0, far});
+	mat4 proj;
+	glm_mat4_identity(proj);
+	glm_perspective(glm_rad(45.0f), 1, 0.1f, 100.0f, proj);
+	glm_mat4_print(view, stdout);
+	ft_printf("My\n%+m", t_view);
 	while (!glfwWindowShouldClose(window))
 	{
-		mat4 model = mat_identity();
-		model = mat_rotate(model, VEC(0.5f, 1.0f, 0.0f, 1.0f), (float)glfwGetTime() * DEG_TO_RAD(50.0f));
-		// model = mat_scale(model, VEC(0.3, 0.3, 0.3, 1));
-		mat4 view = mat_identity();
-		view = mat_translate(view, VEC(0, 0, far, 1));
-		mat4 proj = mat_identity();
-		proj = mat_perspective(45.0f, 1, 0.1f, 1000.0f);
-		if (i++ < 1)
-			ft_printf("%m", proj);
-		glUniformMatrix4fv(model_loc, 1, GL_FALSE, (float*)&model);
-		glUniformMatrix4fv(view_loc, 1, GL_FALSE, (float*)&view);
-		glUniformMatrix4fv(proj_loc, 1, GL_FALSE, (float*)&proj);
-		processInput(window, &far);
+		glUniformMatrix4fv(model_loc, 1, GL_FALSE, (float*)&t_model);
+		glUniformMatrix4fv(view_loc, 1, GL_FALSE, (float*)&t_view);
+		glUniformMatrix4fv(proj_loc, 1, GL_FALSE, proj[0]);
+		processInput(window, &angle_x, &angle_y, &far);
 		glClearColor(68 / (float)255, 85 / (float)255, 90 / (float)255, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glDrawArrays(GL_TRIANGLES, 0, 12 * 3);

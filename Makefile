@@ -42,7 +42,8 @@ LIBS		   += -L $(LIBFT_PATH) -lft
 
 INCLUDE_DIRS   += -I $(LIB_DIR)/glad/include \
 				  -I ./inc \
-				  -I $(LIBFT_PATH)/inc
+				  -I $(LIBFT_PATH)/inc \
+				  -I $(LIB_DIR)/cglm/include
 
 GLAD_SRC		= $(LIB_DIR)/glad/src/glad.c
 
@@ -83,6 +84,9 @@ clean:
 	@/bin/rm -f $(OBJECTS)
 	@$(MAKE) -s -C $(LIBFT_PATH) clean
 	@echo "\033[92m[all *.o files deleted!]\033[0m"
+
+test:
+	clang++ -o test test_main.c
 
 fclean: clean
 	@/bin/rm -f $(EXECUTABLE)

@@ -14,5 +14,9 @@ void main() {
 	// gl_Position = vec4(pos, 1.0f);
 	// vertexColor = vec4(view[2].w, 0, 0,  1);
 	// vertexColor = vec4(test[3].x, test[3].y, test[3].z, 1);
-	vertexColor = vec4(color, 1);
+	// if (projection[3].z < 0.0f)
+	// 	vertexColor = vec4(0.0f, 1.0f, 0.0f, 1.0f);
+	// else
+	// 	vertexColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	vertexColor = vec4(color, 1.0f);
 }
