@@ -1,6 +1,9 @@
 #include "scop.h"
 
-void processInput(GLFWwindow *window, float *angle_x, float *angle_y, float *far)
+float deltaTime = 0.0f;	// Time between current frame and last frame
+float lastFrame = 0.0f; // Time of last frame
+
+void processInput(GLFWwindow *window, t_vec4 *cameraPos, t_vec4 *cameraFront, t_vec4 *cameraUp)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -10,18 +13,15 @@ void processInput(GLFWwindow *window, float *angle_x, float *angle_y, float *far
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
-	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-		*angle_y = clamp(0, 360, *angle_y -= 1);
-	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		*angle_y = clamp(0, 360, *angle_y += 1);
-	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		*angle_x = clamp(0, 360, *angle_x += 1);
-	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		*angle_x = clamp(0, 360, *angle_x -= 1);
-	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
-		*far = clamp(-10, 10, *far += 0.01f);
-	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
-		*far = clamp(-10, 10, *far -= 0.01f);
+    float cameraSpeed = 5.0f * deltaTime; // adjust accordingly
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        *cameraPos += cameraSpeed * *cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        *cameraPos -= cameraSpeed * *cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        *cameraPos -= vec_unit(vec_cross(*cameraFront, *cameraUp)) * cameraSpeed;
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        *cameraPos += vec_unit(vec_cross(*cameraFront, *cameraUp)) * cameraSpeed;
 }
 
 const float vertices[] = {
@@ -90,8 +90,8 @@ int main_test()
 {
 	mat4 proj;
 	glm_mat4_identity(proj);
-	glm_ortho(0, 800, 800, 0, 0.1f, 100.0f, proj);
-	t_mat4 t_proj = mat_ortho(VEC(0, 800, 0, 800), 0.1f, 100.0f);
+	glm_ortho(0, WIDTH, HEIGHT, 0, 0.1f, 100.0f, proj);
+	t_mat4 t_proj = mat_ortho(VEC(0, WIDTH, 0, HEIGHT), 0.1f, 100.0f);
 }
 
 int main(void)
@@ -104,7 +104,7 @@ int main(void)
 	uint32_t	shaderProg;
 
 	ft_printf("####       Start        ####\n");
-	if (!gl_init("Scop", 800, 800, &window))
+	if (!gl_init("Scop", WIDTH, HEIGHT, &window))
 		return (gl_error_report("OpenGL could not init :(", -1));
 	print_gl_info();
 	// Read shaders from source
@@ -125,17 +125,7 @@ int main(void)
 		return (-1);
 	glDeleteShader(vertShaderId);
 	glDeleteShader(fragShaderId);  
-
-	const uint32_t size = 100000;
-
-	t_vec4 *arr = NULL;
-	arr = malloc(10 * size * sizeof(t_vec4));
-	if (arr == NULL)
-		exit(-1);
 	
-	for (int i = 0; i < size; i++)
-		memcpy(arr + (i * 10), cube_pos, 10 * sizeof(t_vec4));
-
 	uint32_t vao; // vertex_attrib_arr
 	uint32_t ebo; // element_buffer_obj
 	uint32_t vbo; // vertex_buffer_object
@@ -164,34 +154,35 @@ int main(void)
 	glEnable(GL_DEPTH_TEST);
 	if (glGetError() != GL_NO_ERROR)
 		ft_printf("WARNING glError: %d", glGetError());
-	float angle_x = 45;
-	float angle_y = 45;
-	float far = -5;
-		t_mat4 proj = mat_identity();
-		proj = mat_perspective(DEG_TO_RAD(45), 1, 0.1f, 100.0f);
-		t_mat4 view = mat_identity();
-		view = mat_translate(view, VEC(0, 0, far, 1));
-		glUniformMatrix4fv(view_loc, 1, GL_TRUE, (float*)&view);
-		glUniformMatrix4fv(proj_loc, 1, GL_TRUE, (float*)&proj);
-		glClearColor(68 / (float)255, 85 / (float)255, 90 / (float)255, 1.0f);
+	t_mat4 proj = mat_identity();
+	proj = mat_perspective(DEG_TO_RAD(45), WIDTH/(float)HEIGHT, 0.1f, 100.0f);
+	// t_mat4 view = mat_identity();
+	// view = mat_translate(view, VEC(0, 0, cam_z, 1));
+	glUniformMatrix4fv(proj_loc, 1, GL_TRUE, (float*)&proj);
+	glClearColor(68 / (float)255, 85 / (float)255, 90 / (float)255, 1.0f);
+	t_vec4 cam_pos = VEC3(0, 0, 3);
+	t_vec4 cam_front = VEC3(0, 0, -1);
+	t_vec4 cam_up = VEC3(0, 1, 0);
 	while (!glfwWindowShouldClose(window))
 	{
-		double initTime = glfwGetTime();
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		for (int i = 0; i < 10 * size; i++) {
+		t_mat4 view = mat_look_at(cam_pos, cam_pos + cam_front, cam_up);
+		// t_mat4 view = mat_look_at(VEC3(cam_x, 0, cam_z), VEC3(0, 0, 0), VEC3(0, 1, 0));
+		glUniformMatrix4fv(view_loc, 1, GL_TRUE, (float*)&view);
+		for (int i = 0; i < 10; i++) {
 			t_mat4 model = mat_identity();
-			model = mat_translate(model, arr[i]);
-			float angle = (i + 1);
-			model = mat_rotate(model, VEC(1, 0.3f, 0.5f, 0), (float)glfwGetTime() * DEG_TO_RAD(angle));
+			model = mat_translate(model, cube_pos[i]);
+			model = mat_rotate(model, VEC(1, 0.3f, 0.5f, 0), (float)glfwGetTime() * DEG_TO_RAD(30.0f * (i + 1)));
 			glUniformMatrix4fv(model_loc, 1, GL_TRUE, (float*)&model);
 			glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
 		}
-		processInput(window, &angle_x, &angle_y, &far);
+		processInput(window, &cam_pos, &cam_front, &cam_up);
 		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-		double deltaTime = glfwGetTime() - initTime;
-		printf("%f\n", deltaTime * 1000);
 	}
 	glfwTerminate();
 	ft_printf("#### IT IS FINALLY ENDED! ####\n");

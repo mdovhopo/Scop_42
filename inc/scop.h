@@ -8,9 +8,14 @@
 # include <GLFW/glfw3.h>
 # include <cglm/cglm.h>
 
+// TODO move this to env struct
 
-#define VERTEX_SHADER_PATH "./src/shaders/vertShader.vert"
-#define FRAGMENT_SHADER_PATH "./src/shaders/fragShader.frag"
+# define WIDTH 800
+# define HEIGHT 600
+
+
+#define VERTEX_SHADER_PATH		"./src/shaders/vertShader.vert"
+#define FRAGMENT_SHADER_PATH	"./src/shaders/fragShader.frag"
 
 /*
 ** Init enviroment
