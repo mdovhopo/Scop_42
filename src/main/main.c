@@ -14,14 +14,15 @@ void processInput(GLFWwindow *window, t_vec4 *cameraPos, t_vec4 *cameraFront, t_
 	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     float cameraSpeed = 5.0f * deltaTime; // adjust accordingly
+	// TODO MacOS Clang cant multiply float and vector. Do smth with this 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        *cameraPos += cameraSpeed * *cameraFront;
+        *cameraPos += VEC(cameraSpeed, cameraSpeed, cameraSpeed, cameraSpeed) * *cameraFront;
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        *cameraPos -= cameraSpeed * *cameraFront;
+        *cameraPos -=  VEC(cameraSpeed, cameraSpeed, cameraSpeed, cameraSpeed) * *cameraFront;
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        *cameraPos -= vec_unit(vec_cross(*cameraFront, *cameraUp)) * cameraSpeed;
+        *cameraPos -= vec_unit(vec_cross(*cameraFront, *cameraUp)) *  VEC(cameraSpeed, cameraSpeed, cameraSpeed, cameraSpeed);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        *cameraPos += vec_unit(vec_cross(*cameraFront, *cameraUp)) * cameraSpeed;
+        *cameraPos += vec_unit(vec_cross(*cameraFront, *cameraUp)) *  VEC(cameraSpeed, cameraSpeed, cameraSpeed, cameraSpeed);
 }
 
 const float vertices[] = {
@@ -85,14 +86,6 @@ const uint32_t indices[] = {
 	0, 1, 3,
 	1, 2, 3
 };
-
-int main_test()
-{
-	mat4 proj;
-	glm_mat4_identity(proj);
-	glm_ortho(0, WIDTH, HEIGHT, 0, 0.1f, 100.0f, proj);
-	t_mat4 t_proj = mat_ortho(VEC(0, WIDTH, 0, HEIGHT), 0.1f, 100.0f);
-}
 
 int main(void)
 {
