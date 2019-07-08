@@ -7,7 +7,7 @@ First you need to obtain copy of this repository
 
 ```sh
 
-git clone https://github.com/mdovhopo/Scop_42
+git clone https://github.com/mdovhopo/Scop_42 --recurse-submodules
 
 ```
 
