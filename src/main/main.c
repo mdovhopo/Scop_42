@@ -3,6 +3,39 @@
 float deltaTime = 0.0f;	// Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 
+float yaw = -90.0f;
+float pitch = 0;
+
+float lastX;
+float lastY;
+bool firstMouse = true;
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    if(firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; 
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.05f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw   += xoffset;
+	pitch += yoffset;
+	if(pitch > 89.0f)
+		pitch =  89.0f;
+	if(pitch < -89.0f)
+		pitch = -89.0f;
+}
+
 void processInput(GLFWwindow *window, t_vec4 *cameraPos, t_vec4 *cameraFront, t_vec4 *cameraUp)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -99,6 +132,7 @@ int main(void)
 	ft_printf("####       Start        ####\n");
 	if (!gl_init("Scop", WIDTH, HEIGHT, &window))
 		return (gl_error_report("OpenGL could not init :(", -1));
+	glfwSetCursorPosCallback(window, mouse_callback);
 	print_gl_info();
 	// Read shaders from source
 
@@ -156,12 +190,20 @@ int main(void)
 	t_vec4 cam_pos = VEC3(0, 0, 3);
 	t_vec4 cam_front = VEC3(0, 0, -1);
 	t_vec4 cam_up = VEC3(0, 1, 0);
+	t_vec4 dir = {};
+	// float pitch = 0;
+	// float yaw = 0;
+	ft_printf("%v", dir);
 	while (!glfwWindowShouldClose(window))
 	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		dir[0] = cos(DEG_TO_RAD(pitch)) * cos(DEG_TO_RAD(yaw));
+		dir[1] = sin(DEG_TO_RAD(pitch));
+		dir[2] = cos(DEG_TO_RAD(pitch)) * sin(DEG_TO_RAD(yaw));
+		cam_front = vec_unit(dir);
 		t_mat4 view = mat_look_at(cam_pos, cam_pos + cam_front, cam_up);
 		// t_mat4 view = mat_look_at(VEC3(cam_x, 0, cam_z), VEC3(0, 0, 0), VEC3(0, 1, 0));
 		glUniformMatrix4fv(view_loc, 1, GL_TRUE, (float*)&view);

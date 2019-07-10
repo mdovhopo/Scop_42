@@ -13,7 +13,6 @@
 # define WIDTH 800
 # define HEIGHT 600
 
-
 #define VERTEX_SHADER_PATH		"./src/shaders/vertShader.vert"
 #define FRAGMENT_SHADER_PATH	"./src/shaders/fragShader.frag"
 
@@ -45,4 +44,4 @@ char	*read_file(const char *path);
 
 int32_t		gl_error_report(const char *msg, const int32_t exit_code);
 
-#endif /* SCOP_H */
+#endif

@@ -10,6 +10,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+float lastX = 400, lastY = 300;
+
+
+
 # if !defined(__MACH__) && !defined(__APPLE__) // on MacOS i have OpenGL 4.1 and this stuff is not working on <= 4.4
 void GLAPIENTRY
 MessageCallback(GLenum source,
@@ -100,6 +104,7 @@ bool	gl_init(const char *window_name,
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		return (gl_error_report("Could not load GL functions :(", -1));
 	glViewport(0, 0, width, height);
+	glfwSetInputMode(*win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
 	glfwSetFramebufferSizeCallback(*win, framebuffer_size_callback);
 	# if !defined(__MACH__) && !defined(__APPLE__) // on MacOS i have OpenGL 4.1 and this stuff is not working on <= 4.4
 	// glDebugMessageCallback(MessageCallback, 0);

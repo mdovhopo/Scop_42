@@ -47,7 +47,7 @@ INCLUDE_DIRS   += -I $(LIB_DIR)/glad/include \
 
 GLAD_SRC		= $(LIB_DIR)/glad/src/glad.c
 
-STD 			= -std=c99
+STD 			= -std=c99 -pedantic
 
 SOURCE_DIR			= src
 SOURCES			= $(wildcard src/main/*.c)
