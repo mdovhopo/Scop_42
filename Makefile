@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+         #
+#    By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 15:11:01 by mdovhopo          #+#    #+#              #
-#    Updated: 2019/06/29 15:11:16 by mdovhopo         ###   ########.fr        #
+#    Updated: 2019/07/12 11:23:43 by tryckylake       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,18 +47,19 @@ INCLUDE_DIRS   += -I $(LIB_DIR)/glad/include \
 
 GLAD_SRC		= $(LIB_DIR)/glad/src/glad.c
 
-STD 			= -std=c99 -pedantic
+STD 			= -std=c99 
 
 SOURCE_DIR			= src
 SOURCES			= $(wildcard src/main/*.c)
 SOURCES		   += $(wildcard src/utils/*.c)
 SOURCES		   += $(wildcard src/shaders/*.c)
+SOURCES		   += $(wildcard src/camera/*.c)
 SOURCES		   += $(GLAD_SRC)
 OBJECTS			= $(SOURCES:.c=.o)
 
 INCLUDES		=
 
-CFLAGS 			= -c -Wall
+CFLAGS 			= -c -Wall -pedantic
 CC				= clang -g
 EXECUTABLE		= sad_cat
 

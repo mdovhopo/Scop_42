@@ -78,14 +78,16 @@ void APIENTRY glDebugOutput(GLenum source,
 }
 #endif
 
-bool	gl_init(const char *window_name,
+bool	gl_env_init(const char *window_name,
 				const uint32_t w,
 				const uint32_t h,
-				GLFWwindow **win)
+				t_gl_env *e)
 {
 	int width;
 	int height;
 
+	e->w_width = w;
+	e->w_height = h;
 	if (!glfwInit()) {
 		return (false);
 	}
@@ -96,16 +98,19 @@ bool	gl_init(const char *window_name,
 	// debug
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);  
 	glfwSetErrorCallback(error_callback);
-	*win = glfwCreateWindow(w, h, "Scop", NULL, NULL);
-	if (!*win)
-		return (gl_error_report("Could not create window :(", -1));
-	glfwGetFramebufferSize(*win, &width, &height);
-	glfwMakeContextCurrent(*win);
+	e->window = glfwCreateWindow(w, h, "Scop", NULL, NULL);
+	if (!(e->window))
+		return (gl_error_report("Could not create window :(", 0));
+	glfwGetFramebufferSize(e->window, &width, &height);
+	glfwMakeContextCurrent(e->window);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-		return (gl_error_report("Could not load GL functions :(", -1));
+		return (gl_error_report("Could not load GL functions :(", 0));
+	glDepthFunc(GL_LESS);
+	glEnable(GL_DEPTH_TEST);
 	glViewport(0, 0, width, height);
-	glfwSetInputMode(*win, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
-	glfwSetFramebufferSizeCallback(*win, framebuffer_size_callback);
+	glClearColor(68 / (float)255, 85 / (float)255, 90 / (float)255, 1.0f);
+	glfwSetInputMode(e->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
+	glfwSetFramebufferSizeCallback(e->window, framebuffer_size_callback);
 	# if !defined(__MACH__) && !defined(__APPLE__) // on MacOS i have OpenGL 4.1 and this stuff is not working on <= 4.4
 	// glDebugMessageCallback(MessageCallback, 0);
 	GLint flags = 0; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
