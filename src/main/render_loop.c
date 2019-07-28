@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 11:31:52 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/07/12 11:56:02 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/07/12 21:03:25 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,9 @@ void processInput(GLFWwindow *window, t_camera *cam)
         cam->cam_pos += vec_unit(vec_cross(cam->cam_front, cam->cam_up)) *  VEC(cameraSpeed, cameraSpeed, cameraSpeed, cameraSpeed);
 }
 
-t_vec4 cube_pos[10] = {
-  VEC( 0.0f,  0.0f,  0.0f, 0), 
-  VEC( 2.0f,  5.0f, -15.0f, 0), 
-  VEC(-1.5f, -2.2f, -2.5f, 0),  
-  VEC(-3.8f, -2.0f, -12.3f, 0),  
-  VEC( 2.4f, -0.4f, -3.5f, 0),  
-  VEC(-1.7f,  3.0f, -7.5f, 0),  
-  VEC( 1.3f, -2.0f, -2.5f, 0),  
-  VEC( 1.5f,  2.0f, -2.5f, 0), 
-  VEC( 1.5f,  0.2f, -1.5f, 0), 
-  VEC(-1.3f,  1.0f, -1.5f, 0)
+t_vec4 cube_pos[] = {
+	VEC(0, 0, 0, 0.5),
+	VEC(2, 2, -1, 0.2)
 };
 
 void	render_loop(t_gl_env *env, t_camera *cam)
@@ -55,21 +47,22 @@ void	render_loop(t_gl_env *env, t_camera *cam)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		get_delta_time();
+		processInput(env->window, cam);
 		dir[0] = cos(DEG_TO_RAD(pitch)) * cos(DEG_TO_RAD(yaw));
 		dir[1] = sin(DEG_TO_RAD(pitch));
 		dir[2] = cos(DEG_TO_RAD(pitch)) * sin(DEG_TO_RAD(yaw));
 		cam->cam_front = vec_unit(dir);
 		t_mat4 view = mat_look_at(cam->cam_pos, cam->cam_pos + cam->cam_front, cam->cam_up);
 		glUniformMatrix4fv(cam->uniform_view_loc, 1, GL_TRUE, (float*)&view);
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 2; i++) {
 			t_mat4 model = mat_identity();
 			model = mat_translate(model, cube_pos[i]);
-			model = mat_rotate(model, VEC(1, 0.3f, 0.5f, 0), (float)glfwGetTime() * DEG_TO_RAD(30.0f * (i + 1)));
+			model = mat_rotate(model, VEC(1, 0.3f, 0.5f, 0), (float)glfwGetTime() * DEG_TO_RAD(30.0f));
+			model = mat_scale(model, VEC3(cube_pos[i][3], cube_pos[i][3], cube_pos[i][3]));
 			glUniformMatrix4fv(cam->uniform_model_loc, 1, GL_TRUE, (float*)&model);
-			glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
+			// glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
+			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 		}
-		processInput(env->window, cam);
-		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(env->window);
 		glfwPollEvents();
 	}

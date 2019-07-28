@@ -36,11 +36,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 		pitch = -89.0f;
 }
 
-const uint32_t indices[] = {
-	0, 1, 3,
-	1, 2, 3
-};
-
 int main(void)
 {
 	t_gl_env	env = {};
