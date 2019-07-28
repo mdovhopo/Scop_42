@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/07/28 15:07:56 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/07/28 21:00:15 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*read_file(const char *path);
 ** Error handle
 */
 
-int32_t		gl_error_report(const char *msg, const int32_t exit_code);
+int32_t	gl_error_report(const char *msg, const int32_t exit_code);
 
 // TODO split up this header to render.h and parser.h
 
@@ -137,5 +137,8 @@ typedef struct	s_obj
 	t_mtl		material;
 	float		smooth;
 }				t_obj;
+
+
+float	ft_parse_float(char *s, int *err);
 
 #endif
