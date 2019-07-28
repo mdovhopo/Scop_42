@@ -6,7 +6,7 @@
 #    By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 15:11:01 by mdovhopo          #+#    #+#              #
-#    Updated: 2019/07/12 11:23:43 by tryckylake       ###   ########.fr        #
+#    Updated: 2019/07/28 12:27:13 by tryckylake       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SOURCES			= $(wildcard src/main/*.c)
 SOURCES		   += $(wildcard src/utils/*.c)
 SOURCES		   += $(wildcard src/shaders/*.c)
 SOURCES		   += $(wildcard src/camera/*.c)
+SOURCES		   += $(wildcard src/obj_parser/*.c)
 SOURCES		   += $(GLAD_SRC)
 OBJECTS			= $(SOURCES:.c=.o)
 

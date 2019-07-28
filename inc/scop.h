@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/07/26 16:32:16 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/07/28 15:07:56 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <cglm/cglm.h>
 
 extern float delta_time;	// Time between current frame and last frame
-extern float last_frame; // Time of last frame
+extern float last_frame;	// Time of last frame
 
 // Camera rotaion stuff
 
@@ -106,5 +106,36 @@ char	*read_file(const char *path);
 */
 
 int32_t		gl_error_report(const char *msg, const int32_t exit_code);
+
+// TODO split up this header to render.h and parser.h
+
+/*
+** OBJ Parser
+*/
+
+typedef enum	e_first_token
+{
+	VERTEX = 0,
+	INDEX,
+	MTLLIB,
+	USEMTL,
+	OBJECT,
+	SMOOTH
+}				t_first_token;
+
+typedef	struct	s_mtl
+{
+	char *name;
+}				t_mtl;
+
+typedef struct	s_obj
+{
+	t_vec4		*vertices;
+	uint32_t	vert_len;
+	t_vec4		*indices;
+	uint32_t	indices_len;
+	t_mtl		material;
+	float		smooth;
+}				t_obj;
 
 #endif
