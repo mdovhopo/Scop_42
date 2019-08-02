@@ -6,7 +6,7 @@
 #    By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 15:11:01 by mdovhopo          #+#    #+#              #
-#    Updated: 2019/07/28 12:27:13 by tryckylake       ###   ########.fr        #
+#    Updated: 2019/08/03 00:53:30 by tryckylake       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,8 @@ $(EXECUTABLE): $(OBJECTS) $(LIBFT_BIN)
 	@echo "[Compiling target $@ for $(OS_NAME)]"
 	@$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(OBJECTS) $(LIBS) -o $@
 	@echo "\033[92m[Target $(EXECUTABLE) Has been created, run ./$@]\033[0m"
+	@echo "\033[92m[Starting $(EXECUTABLE) ...]\033[0m"
+	@./$(EXECUTABLE)
 
 %.o: %.c $(INCLUDES)
 	@echo "[Compiling] $@"

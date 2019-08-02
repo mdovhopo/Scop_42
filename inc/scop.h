@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/07/28 21:00:15 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/03 02:37:01 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ extern float lastY;
 
 #define VERTEX_SHADER_PATH		"./src/shaders/vertShader.vert"
 #define FRAGMENT_SHADER_PATH	"./src/shaders/fragShader.frag"
+
+#define OBJ_DEFAULT_PATH		"./resources"
+#define TEAPOT_OBJ_PATH			OBJ_DEFAULT_PATH "/teapot.obj"
+#define FORTY_TWO_OBJ_PATH		OBJ_DEFAULT_PATH "/42.obj"
 
 typedef struct	s_gl_env
 {
@@ -132,7 +136,7 @@ typedef struct	s_obj
 {
 	t_vec4		*vertices;
 	uint32_t	vert_len;
-	t_vec4		*indices;
+	t_veci4		*indices;
 	uint32_t	indices_len;
 	t_mtl		material;
 	float		smooth;
@@ -140,5 +144,6 @@ typedef struct	s_obj
 
 
 float	ft_parse_float(char *s, int *err);
+int		ft_parse_int(char *s, int *err);
 
 #endif

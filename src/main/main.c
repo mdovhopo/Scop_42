@@ -1,4 +1,20 @@
 #include "scop.h"
+#include <time.h>
+clock_t start;
+
+void	time_start()
+{
+	start = clock();
+}
+
+void	time_end()
+{
+	double cpu_time_used;
+	clock_t end;
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	printf("Time: [%fms]\n", cpu_time_used); 
+}
 
 float delta_time = 0.0f;
 float last_frame = 0.0f;
@@ -9,6 +25,18 @@ float pitch = 0;
 float lastX;
 float lastY;
 bool firstMouse = true;
+
+void	dump_parced_object(t_obj obj)
+{
+	printf("[Dump Vertex array of length %d]\n", obj.vert_len);
+	for (int i = 0; i < obj.vert_len; i++) {
+		printf("v[%d]\t%+f %+f %+f\n", i, obj.vertices[i][0], obj.vertices[i][1], obj.vertices[i][2]);
+	}
+	printf("[Dump Index array of length %d]\n", obj.indices_len);
+	for (int i = 0; i < obj.indices_len; i++) {
+		printf("f[%d]\t%d %d %d\n", i, obj.indices[i][0], obj.indices[i][1], obj.indices[i][2]);
+	}
+}
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
@@ -53,7 +81,7 @@ void	throw_parsing_error(uint32_t line_count, char *token, char *msg)
 	if (msg)
 		ft_printf(CYN"\n%s\n"RESET, msg);
 	ft_printf(GRN"\nLearn more about .obj format:\n"RESET
-			BLU"https://en.wikipedia.org/wiki/Wavefront_.obj_file"RESET);
+			BLU"https://en.wikipedia.org/wiki/Wavefront_.obj_file\n"RESET);
 	exit(-1);
 }
 
@@ -77,41 +105,58 @@ void	parse_vertex(char** tokens, t_obj *obj, uint32_t line_count)
 	if (i < 3)
 		throw_parsing_error(line_count, tokens[i], 
 				"Expected at least 3 float values");
-	if (obj->vertices == NULL)
-	{
-		obj->vertices = malloc(sizeof(t_vec4));
-		ft_memcpy(obj->vertices, &v, sizeof(t_vec4));
-		obj->vert_len = 1;
-	}
-	else
-	{
-		obj->vertices = ft_array_push(obj->vertices, &v, sizeof(t_vec4), obj->vert_len++);
-	}
+	obj->vertices = ft_array_push(obj->vertices, &v, sizeof(t_vec4), obj->vert_len++);
 }
 
 void	parse_index(char** tokens, t_obj *obj, uint32_t line_count)
 {
-	printf("parse index\n");
+	t_veci4	v;
+	int		length;
+	int		err;
+	int		i;
+
+	v = VECI3(0, 0, 0);
+	length = -1;
+	while(tokens[++length])
+		;
+	if (length < 3)
+		throw_parsing_error(line_count, tokens[length],
+			"Expected at least 3 integer values.");
+	i = 1;
+	while (++i < length)
+	{
+		v[0] = ft_parse_int(tokens[0], &err);
+		if (err)
+			throw_parsing_error(line_count, tokens[0], NULL);
+		v[1] = ft_parse_int(tokens[i - 1], &err);
+		if (err)
+			throw_parsing_error(line_count, tokens[i - 1], NULL);
+		v[2] = ft_parse_int(tokens[i], &err);
+		if (err)
+			throw_parsing_error(line_count, tokens[i], NULL);
+		// printf("v[%d]\t%+f %+f %+f\n", i - 2, v[0], v[1], v[2]);
+		obj->indices = ft_array_push(obj->indices, &v, sizeof(t_vec4), obj->indices_len++);
+	}
 }
 
 void	parse_mtllib(char** tokens, t_obj *obj, uint32_t line_count)
 {
-	printf("parse mtllib\n");
+	// printf("parse mtllib\n");
 }
 
 void	parse_usemtl(char** tokens, t_obj *obj, uint32_t line_count)
 {
-	printf("parse usemtl\n");
+	// printf("parse usemtl\n");
 }
 
 void	parse_object(char** tokens, t_obj *obj, uint32_t line_count)
 {
-	printf("parse object\n");
+	// printf("parse object\n");
 }
 
 void	parse_smooth(char** tokens, t_obj *obj, uint32_t line_count)
 {
-	printf("parse smooth\n");
+	// printf("parse smooth\n");
 }
 
 void (*line_parsers[])(char** tokens, t_obj *obj, uint32_t line_count) = {
@@ -148,23 +193,18 @@ void	free_2d_arr(void **arr)
 	}
 }
 
+
 int main(void)
 {
-	int *arr = malloc(sizeof(int));
-	arr[0] = 0xf;
-	int val = 0xf;
-	size_t len = 1;
-	for (int i = 0; i < 10000; i++) {
-		arr = ft_array_push(arr, &val, sizeof(int), len++);
-	}
-	int fd = open("/home/tryckylake/UNIT_PROJECTS/Scop_42/resources/42.obj", O_RDONLY);
 	char *line = NULL;
-	uint32_t line_count = 0;
+	uint32_t line_count = 1;
 	t_obj obj;
 	ft_memset(&obj, 0, sizeof(obj));
-	while (get_next_line(fd, &line) > 0)
+	time_start();
+	while(ft_read_next_line(TEAPOT_OBJ_PATH, &line) > 0)
 	{
 		char *trimmed_line = ft_strtrim(line);
+		// printf("[%d] |%s|\n", line_count, line);
 		free(line);
 		if (*trimmed_line == '#' || *trimmed_line == 0 || *trimmed_line == '\n') {
 			free(trimmed_line);
@@ -173,13 +213,16 @@ int main(void)
 		}
 		char **tokens = ft_strsplit(trimmed_line, ' ');
 		t_first_token token_id = find_str_in_array((char**)first_tokens, tokens[0]);
-		// printf("%d: |%s|\n", ++line_count, tokens[0]);
 		if (token_id == -1)
 			throw_parsing_error(line_count, tokens[0], NULL);
-		line_parsers[token_id](tokens + 1, &obj, line_count);
+		line_parsers[token_id](tokens + 1, &obj, line_count++);
 		free_2d_arr((void**)tokens);
 		free(trimmed_line);
 	}
+	time_end();
+	// dump_parced_object(obj);
+	free(obj.vertices);
+	free(obj.indices);
 	return (0);
 }
 
