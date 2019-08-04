@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:37:24 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/07/12 20:59:11 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/04 19:02:45 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ const uint32_t indices[] = {
     3, 5, 7
 };
 
-void	init_buffers(void)
+void	init_buffers(t_obj *obj)
 {
 	uint32_t vao; // vertex_attrib_arr
 	uint32_t ebo; // element_buffer_obj
 	uint32_t vbo; // vertex_buffer_object
-    uint32_t lightVAO;
-    glGenVertexArrays(1, &lightVAO);
-    glBindVertexArray(lightVAO);
+	uint32_t lightVAO;
+	glGenVertexArrays(1, &lightVAO);
+	glBindVertexArray(lightVAO);
 	// glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
 	glGenBuffers(1, &ebo);
@@ -54,13 +54,13 @@ void	init_buffers(void)
 	// glBindVertexArray(vao);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, obj->vert_len * sizeof(t_vec4), obj->vertices, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->indices_len * sizeof(t_veci3), obj->indices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(t_vec4), 0);
+	// glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
+	// glEnableVertexAttribArray(1);
 }

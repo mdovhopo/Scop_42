@@ -6,22 +6,22 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/28 20:59:05 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/07/28 21:00:32 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/03 13:49:43 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-static int	get_sign(char **str)
+static int	get_sign(char *str, int *i)
 {
-	if (**str == '+')
+	if (*str == '+')
 	{
-		*str += 1;
+		*i += 1;
 		return 1;
 	}
-	else if (**str == '-')
+	else if (*str == '-')
 	{
-		*str += 1;
+		*i += 1;
 		return -1;
 	}
 	return 1;
@@ -34,34 +34,36 @@ float		ft_parse_float(char *s, int *err)
 	float	int_part;
 	float	fraction;
 	int		fraction_power;
+	int		i;
 
 	str = ft_strtrim(s);
-	while (ft_is_wspace(*str))
-		str += 1;
-	if (*str == 0)
+	i = -1;
+	while (ft_is_wspace(str[++i]))
+		;
+	if (str[i] == 0)
 		return ft_printf(RED"ERROR"RESET" str is empty!"), 0;
-	sign = get_sign(&str);
+	sign = get_sign(&str[i], &i);
 	int_part = 0;
 	fraction = 0;
 	fraction_power = 0;
-	while (ft_isdigit(*str))
+	while (ft_isdigit(str[i]))
 	{
-		int_part = *str - 48 + int_part * 10;
-		str++;
+		int_part = str[i] - 48 + int_part * 10;
+		i++;
 	}
-	if (*str == '.')
+	if (str[i++] == '.')
 	{
-		str++;
-		while(ft_isdigit(*str))
+		while(ft_isdigit(str[i]))
 		{
-			fraction = *str - 48 + fraction * 10;
+			fraction = str[i] - 48 + fraction * 10;
 			fraction_power++;
-			str++;
+			i++;
 		}
 	}
-	if (*str == 0)
+	if (str[i] == 0)
 		*err = 0;
 	else
 		*err = 1;
+	free(str);
 	return (int_part + fraction * pow(10, -fraction_power)) * sign;
 }

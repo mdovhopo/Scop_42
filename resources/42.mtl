@@ -3,9 +3,15 @@
 
 newmtl Material
 Ns 96.078431
+#  red      green    blue   0.0 - 1.0     can be with only 1 value
 Ka 0.000000 0.000000 0.000000
+# diffuse r g b             0.0 - 1.0    can be with only 1 value
 Kd 0.640000 0.640000 0.640000
+# specular r g b            0.0 - 1.0    can be with only 1 value
 Ks 0.500000 0.500000 0.500000
+# optical density (refraction index) 0.001 - 10 
 Ni 1.000000
+# dissolve 0.0 - 1.0
 d 1.000000
+# illumination model 0 - 10
 illum 2

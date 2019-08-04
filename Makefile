@@ -6,7 +6,7 @@
 #    By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 15:11:01 by mdovhopo          #+#    #+#              #
-#    Updated: 2019/08/03 00:53:30 by tryckylake       ###   ########.fr        #
+#    Updated: 2019/08/03 14:37:21 by tryckylake       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ $(EXECUTABLE): $(OBJECTS) $(LIBFT_BIN)
 	@echo "\033[92m[Target $(EXECUTABLE) Has been created, run ./$@]\033[0m"
 	@echo "\033[92m[Starting $(EXECUTABLE) ...]\033[0m"
 	@./$(EXECUTABLE)
+	# @valgrind --leak-check=full -s ./$(EXECUTABLE)
 
 %.o: %.c $(INCLUDES)
 	@echo "[Compiling] $@"

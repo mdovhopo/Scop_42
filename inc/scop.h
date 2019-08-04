@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/03 02:37:01 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/04 18:19:34 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SCOP_H
 
 # include "libft.h"
+# include "obj_parser.h"
 
 # include <stdio.h>
 # include <glad/glad.h>
@@ -36,6 +37,7 @@ extern float lastY;
 
 #define OBJ_DEFAULT_PATH		"./resources"
 #define TEAPOT_OBJ_PATH			OBJ_DEFAULT_PATH "/teapot.obj"
+#define TEAPOT2_OBJ_PATH		OBJ_DEFAULT_PATH "/teapot2.obj"
 #define FORTY_TWO_OBJ_PATH		OBJ_DEFAULT_PATH "/42.obj"
 
 typedef struct	s_gl_env
@@ -80,7 +82,7 @@ bool	compile_shader(	uint32_t *shader_id,
 						const char* name);
 bool	link_shader_prog(uint32_t *prog_id, uint32_t *shaders, uint32_t length);
 bool	create_shader_prog(uint32_t *prog);
-void	init_buffers(void);
+void	init_buffers(t_obj *obj);
 
 /*
 ** Camera
@@ -94,7 +96,7 @@ void	load_camera_projection(	t_camera *cam, float fov,
 ** Main Render
 */
 
-void	render_loop(t_gl_env *env, t_camera *cam);
+void	render_loop(t_gl_env *env, t_camera *cam, t_obj *obj);
 
 /*
 ** Utils
@@ -111,39 +113,5 @@ char	*read_file(const char *path);
 
 int32_t	gl_error_report(const char *msg, const int32_t exit_code);
 
-// TODO split up this header to render.h and parser.h
-
-/*
-** OBJ Parser
-*/
-
-typedef enum	e_first_token
-{
-	VERTEX = 0,
-	INDEX,
-	MTLLIB,
-	USEMTL,
-	OBJECT,
-	SMOOTH
-}				t_first_token;
-
-typedef	struct	s_mtl
-{
-	char *name;
-}				t_mtl;
-
-typedef struct	s_obj
-{
-	t_vec4		*vertices;
-	uint32_t	vert_len;
-	t_veci4		*indices;
-	uint32_t	indices_len;
-	t_mtl		material;
-	float		smooth;
-}				t_obj;
-
-
-float	ft_parse_float(char *s, int *err);
-int		ft_parse_int(char *s, int *err);
 
 #endif
