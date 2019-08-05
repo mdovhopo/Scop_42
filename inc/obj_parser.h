@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 14:01:54 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/03 14:23:30 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/05 14:41:40 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	parse_smooth(char** tokens, t_obj *obj, uint32_t line_count);
 */
 
 void	throw_parsing_error(uint32_t line_count, char *token, char *msg);
+void	throw_parsing_warning(uint32_t line_count, char *token);
 
 /*
 ** Utils

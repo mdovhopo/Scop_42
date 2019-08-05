@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 11:52:14 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/03 11:52:46 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/05 14:41:18 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,10 @@ void	throw_parsing_error(uint32_t line_count, char *token, char *msg)
 	ft_printf(GRN"\nLearn more about .obj format:\n"RESET
 			BLU"https://en.wikipedia.org/wiki/Wavefront_.obj_file\n"RESET);
 	exit(-1);
+}
+
+void	throw_parsing_warning(uint32_t line_count, char *token)
+{
+	ft_printf(YEL"Parsing Warning: "RESET
+			"line:%d Unexpected token: %s\n", line_count, token);
 }

@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/04 18:19:34 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/05 15:34:59 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ extern float lastY;
 #define TEAPOT_OBJ_PATH			OBJ_DEFAULT_PATH "/teapot.obj"
 #define TEAPOT2_OBJ_PATH		OBJ_DEFAULT_PATH "/teapot2.obj"
 #define FORTY_TWO_OBJ_PATH		OBJ_DEFAULT_PATH "/42.obj"
+#define BMW_OBJ_MODEL			OBJ_DEFAULT_PATH "/BMW X5 4.obj"
+#define BUGATTI_OBJ_MODEL		OBJ_DEFAULT_PATH "/bugatti.obj"
+#define PORSCHE_911_OBJ_MODEL	OBJ_DEFAULT_PATH "/Porsche_911_GT2.obj"
 
 typedef struct	s_gl_env
 {

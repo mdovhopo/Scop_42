@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 11:58:00 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/04 18:13:12 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/05 14:50:01 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	parse_index(char** tokens, t_obj *obj, uint32_t line_count)
 	int		length;
 	int		err;
 	int		i;
+	char	**index_data;
 
 	length = -1;
 	while(tokens[++length])
@@ -28,13 +29,22 @@ void	parse_index(char** tokens, t_obj *obj, uint32_t line_count)
 	i = 1;
 	while (++i < length)
 	{
-		v[0] = ft_parse_int(tokens[0], &err) - 1;
+		// TODO error handle stuff for 1/1/1 format
+		index_data = ft_strsplit(tokens[0], '/');
+		v[0] = ft_parse_int(index_data[0], &err) - 1;
+		free_2d_arr(index_data);
 		if (err)
 			throw_parsing_error(line_count, tokens[0], NULL);
-		v[1] = ft_parse_int(tokens[i - 1], &err) - 1;
+		//**********************
+		index_data = ft_strsplit(tokens[i - 1], '/');
+		v[1] = ft_parse_int( index_data[0], &err) - 1;
+		free_2d_arr(index_data);
 		if (err)
 			throw_parsing_error(line_count, tokens[i - 1], NULL);
-		v[2] = ft_parse_int(tokens[i], &err) - 1;
+		//********************
+		index_data = ft_strsplit(tokens[i], '/');
+		v[2] = ft_parse_int(index_data[0], &err) - 1;
+		free_2d_arr(index_data);
 		if (err)
 			throw_parsing_error(line_count, tokens[i], NULL);
 		// printf("v[%d]\t%+f %+f %+f\n", i - 2, v[0], v[1], v[2]);

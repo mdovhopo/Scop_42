@@ -73,10 +73,10 @@ int main(void)
 
 	// ft_printf("####       Start        ####\n");
 	time_start();
-	parse_obj_file(TEAPOT2_OBJ_PATH, &obj);
+	parse_obj_file(BMW_OBJ_MODEL, &obj);
 	time_end("Parse time");
 	// dump_parced_object(obj);
-	if (!gl_env_init("Scop", 800, 600, &env))
+	if (!gl_env_init("Scop", 1600, 900, &env))
 		return (gl_error_report("OpenGL could not init :(", -1));
 	glfwSetCursorPosCallback(env.window, mouse_callback);
 	print_gl_info();
@@ -84,7 +84,7 @@ int main(void)
 	init_buffers(&obj);
 	create_shader_prog(&(env.shader_prog));
 	create_camera(&env, &cam);
-	load_camera_projection(&cam, 45.0f, CAMERA_PERSPECTIVE, VEC2(0.1f, 100.0f));
+	load_camera_projection(&cam, 45.0f, CAMERA_PERSPECTIVE, VEC2(0.1f, 10000.0f));
 
 	if (glGetError() != GL_NO_ERROR)
 		ft_printf("WARNING glError: %d", glGetError());

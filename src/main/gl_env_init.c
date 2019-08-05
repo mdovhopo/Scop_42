@@ -108,6 +108,7 @@ bool	gl_env_init(const char *window_name,
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	glViewport(0, 0, width, height);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	// glClearColor(68 / (float)255, 85 / (float)255, 90 / (float)255, 1.0f);
 	glfwSetInputMode(e->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
 	glfwSetFramebufferSizeCallback(e->window, framebuffer_size_callback);
