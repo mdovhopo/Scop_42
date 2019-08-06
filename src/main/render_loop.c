@@ -6,11 +6,28 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 11:31:52 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/05 15:26:15 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/06 12:51:45 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+#include <time.h>
+
+clock_t start;
+
+static void	time_start()
+{
+	start = clock();
+}
+
+static void	time_end(const char *name)
+{
+	double cpu_time_used;
+	clock_t end;
+	end = clock();
+	cpu_time_used = ((double) (end - start));
+	printf("%s: [%fms]\n", name, cpu_time_used); 
+}
 
 void processInput(GLFWwindow *window, t_camera *cam)
 {
@@ -22,7 +39,7 @@ void processInput(GLFWwindow *window, t_camera *cam)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
-	float cameraSpeed = 100.0f * delta_time; // adjust accordingly
+	float cameraSpeed = 50.0f * delta_time; // adjust accordingly
 	// TODO MacOS Clang cant multiply float and vector. Do smth with this 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		cam->cam_pos += VEC(cameraSpeed, cameraSpeed, cameraSpeed, cameraSpeed) * cam->cam_front;
@@ -51,6 +68,7 @@ void	render_loop(t_gl_env *env, t_camera *cam, t_obj *obj)
 
 	while (!glfwWindowShouldClose(env->window))
 	{
+		time_start();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		get_delta_time();
 		processInput(env->window, cam);
@@ -67,5 +85,6 @@ void	render_loop(t_gl_env *env, t_camera *cam, t_obj *obj)
 		glDrawElements(GL_TRIANGLES, obj->indices_len * 3, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(env->window);
 		glfwPollEvents();
+		time_end("Render Time:");
 	}
 }

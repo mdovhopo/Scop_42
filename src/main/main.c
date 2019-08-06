@@ -2,12 +2,12 @@
 #include <time.h>
 clock_t start;
 
-void	time_start()
+static void	time_start()
 {
 	start = clock();
 }
 
-void	time_end(const char *name)
+static void	time_end(const char *name)
 {
 	double cpu_time_used;
 	clock_t end;
@@ -29,13 +29,13 @@ bool firstMouse = true;
 void	dump_parced_object(t_obj obj)
 {
 	printf("[Dump Vertex array of length %d]\n", obj.vert_len);
-	for (int i = 0; i < obj.vert_len; i++) {
-		printf("v[%d]\t%+f %+f %+f\n", i, obj.vertices[i][0], obj.vertices[i][1], obj.vertices[i][2]);
-	}
+	// for (int i = 0; i < obj.vert_len; i++) {
+		// printf("v[%d]\t%+f %+f %+f\n", i, obj.vertices[i][0], obj.vertices[i][1], obj.vertices[i][2]);
+	// }
 	printf("[Dump Index array of length %d]\n", obj.indices_len);
-	for (int i = 0; i < obj.indices_len; i++) {
-		printf("f[%d]\t%d %d %d\n", i, obj.indices[i][0], obj.indices[i][1], obj.indices[i][2]);
-	}
+	// for (int i = 0; i < obj.indices_len; i++) {
+		// printf("f[%d]\t%d %d %d\n", i, obj.indices[i][0], obj.indices[i][1], obj.indices[i][2]);
+	// }
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
@@ -71,11 +71,11 @@ int main(void)
 	t_camera	cam = {};
 	t_obj		obj = {};
 
-	// ft_printf("####       Start        ####\n");
+	ft_printf("####       Start        ####\n");
 	time_start();
-	parse_obj_file(BMW_OBJ_MODEL, &obj);
+	parse_obj_file(BUGATTI_OBJ_MODEL, &obj);
 	time_end("Parse time");
-	// dump_parced_object(obj);
+	dump_parced_object(obj);
 	if (!gl_env_init("Scop", 1600, 900, &env))
 		return (gl_error_report("OpenGL could not init :(", -1));
 	glfwSetCursorPosCallback(env.window, mouse_callback);
