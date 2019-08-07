@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 11:57:37 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/03 12:17:46 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/06 15:16:16 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ void	parse_vertex(char** tokens, t_obj *obj, uint32_t line_count)
 	if (i < 3)
 		throw_parsing_error(line_count, tokens[i], 
 				"Expected at least 3 float values");
+	if (vec_mag(obj->farest_point) < vec_mag(v))
+		obj->farest_point = v;
 	obj->vertices = ft_array_push(obj->vertices, &v, sizeof(t_vec4), obj->vert_len++);
 }

@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/05 15:34:59 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/07 14:53:05 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,12 @@
 # include <GLFW/glfw3.h>
 # include <cglm/cglm.h>
 
-extern float delta_time;	// Time between current frame and last frame
-extern float last_frame;	// Time of last frame
-
 // Camera rotaion stuff
+
+extern float delta_time;
 
 extern float pitch;
 extern float yaw;
-
-extern float lastX;
-extern float lastY;
 
 #define VERTEX_SHADER_PATH		"./src/shaders/vertShader.vert"
 #define FRAGMENT_SHADER_PATH	"./src/shaders/fragShader.frag"
@@ -63,6 +59,7 @@ typedef struct	s_camera
 	t_vec4		cam_pos;
 	t_vec4		cam_front;
 	t_vec4		cam_up;
+	float		cam_speed;
 }				t_camera;
 
 typedef enum	e_camera_type
@@ -91,7 +88,7 @@ void	init_buffers(t_obj *obj);
 ** Camera
 */
 
-void	create_camera(t_gl_env *env, t_camera *cam);
+void	create_camera(t_gl_env *env, t_camera *cam, t_obj *obj);
 void	load_camera_projection(	t_camera *cam, float fov,
 								t_camera_type type, t_vec4 near_far);
 

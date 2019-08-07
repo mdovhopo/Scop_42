@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 14:01:54 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/05 14:41:40 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/07 13:18:15 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,24 @@ typedef	struct	s_mtl
 	char *name;
 }				t_mtl;
 
+typedef enum	e_obj_manage_type
+{
+	OBJ_ROTATE,
+	OBJ_TRANSLATE
+}				t_obj_manage_type;
+
 typedef struct	s_obj
 {
-	t_vec4		*vertices;
-	uint32_t	vert_len;
-	t_veci3		*indices;
-	uint32_t	indices_len;
-	t_mtl		material;
-	float		smooth;
+	t_vec4				*vertices;
+	uint32_t			vert_len;
+	t_veci3				*indices;
+	uint32_t			indices_len;
+	t_mtl				material;
+	t_vec4				farest_point;
+	float				smooth;
+	t_obj_manage_type	manage_type;
+	t_vec4				rot;
+	t_vec4				trans;
 }				t_obj;
 
 void	parse_obj_file(const char *path, t_obj *obj);
