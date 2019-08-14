@@ -45,16 +45,16 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	xoffset *= sensitivity;
 	yoffset *= sensitivity;
 
-	yaw   += xoffset;
-	pitch += yoffset;
-	if(pitch > 89.0f)
-		pitch =  89.0f;
-	if(pitch < -89.0f)
-		pitch = -89.0f;
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 	{
-		static uint32_t num = 0;
-		printf("Mouse clicked %d %f %f\n", ++num, yoffset ,xoffset);
+		// static uint32_t num = 0;
+		// printf("Mouse clicked %d %f %f\n", ++num, yoffset ,xoffset);
+		yaw   += xoffset;
+		pitch -= yoffset;
+		if(pitch > 89.0f)
+			pitch =  89.0f;
+		if(pitch < -89.0f)
+			pitch = -89.0f;
 	}
 }
 
@@ -67,7 +67,7 @@ int main(void)
 
 	ft_printf("####       Start        ####\n");
 	ft_time_start();
-	parse_obj_file(BMW_OBJ_MODEL, &obj);
+	parse_obj_file(TEAPOT2_OBJ_PATH, &obj);
 	ft_time_end("Parse time");
 	dump_parced_object(obj, false);
 	if (!gl_env_init("Scop", 1600, 900, &env))

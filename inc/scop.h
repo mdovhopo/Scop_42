@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/07 14:53:05 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/14 12:10:07 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct	s_camera
 	t_vec4		cam_front;
 	t_vec4		cam_up;
 	float		cam_speed;
+	uint32_t	cam_rotate_radius;
+
 }				t_camera;
 
 typedef enum	e_camera_type

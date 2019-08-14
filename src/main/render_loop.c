@@ -6,13 +6,11 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 11:31:52 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/07 14:32:33 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/14 12:10:10 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
-
-const uint32_t	cam_rotate_radius = 100;
 
 void processInput(GLFWwindow *window, t_camera *cam, t_obj *obj)
 {
@@ -73,6 +71,7 @@ void processInput(GLFWwindow *window, t_camera *cam, t_obj *obj)
 			obj->trans[2] = obj->trans[2] - cameraSpeed;
 	}
 	// Camera movement need to be locket by default
+	return;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		cam->cam_pos += VEC(cameraSpeed, cameraSpeed, cameraSpeed, cameraSpeed) * cam->cam_front;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -106,8 +105,8 @@ void	render_loop(t_gl_env *env, t_camera *cam, t_obj *obj)
 		dir[0] = cos(DEG_TO_RAD(pitch)) * cos(DEG_TO_RAD(yaw));
 		dir[1] = sin(DEG_TO_RAD(pitch));
 		dir[2] = cos(DEG_TO_RAD(pitch)) * sin(DEG_TO_RAD(yaw));
-		cam->cam_front = vec_unit(dir);
-		t_mat4 view = mat_look_at(cam->cam_pos, cam->cam_pos + cam->cam_front, cam->cam_up);
+		cam->cam_pos = vec_unit(dir) * FLOAT_TO_VEC(cam->cam_rotate_radius);
+		t_mat4 view = mat_look_at(cam->cam_pos, cam->cam_front, cam->cam_up);
 		glUniformMatrix4fv(cam->uniform_view_loc, 1, GL_TRUE, (float*)&view);
 		t_mat4 model = mat_identity();
 		model = mat_translate(model, obj->trans);
