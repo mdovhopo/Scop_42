@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 11:31:52 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/14 12:10:10 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/17 17:23:50 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ void	render_loop(t_gl_env *env, t_camera *cam, t_obj *obj)
 		dir[1] = sin(DEG_TO_RAD(pitch));
 		dir[2] = cos(DEG_TO_RAD(pitch)) * sin(DEG_TO_RAD(yaw));
 		cam->cam_pos = vec_unit(dir) * FLOAT_TO_VEC(cam->cam_rotate_radius);
+		uint32_t uniform_pos_loc = glGetUniformLocation(env->shader_prog, "u_view_pos");
+		glUniform4fv(uniform_pos_loc, 1, (float*)&(cam->cam_pos));
 		t_mat4 view = mat_look_at(cam->cam_pos, cam->cam_front, cam->cam_up);
 		glUniformMatrix4fv(cam->uniform_view_loc, 1, GL_TRUE, (float*)&view);
 		t_mat4 model = mat_identity();
@@ -114,7 +116,8 @@ void	render_loop(t_gl_env *env, t_camera *cam, t_obj *obj)
 		model = mat_rotate(model, VEC3(0, 1, 0), DEG_TO_RAD(obj->rot[1]));
 		model = mat_rotate(model, VEC3(0, 0, 1), DEG_TO_RAD(obj->rot[2]));
 		glUniformMatrix4fv(cam->uniform_model_loc, 1, GL_TRUE, (float*)&model);
-		glDrawElements(GL_TRIANGLES, obj->indices_len * 3, GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, obj->points_len * 4);
+		// glDrawElements(GL_TRIANGLES, obj->indices_len * 3, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(env->window);
 		glfwPollEvents();
 	}

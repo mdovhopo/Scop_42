@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 12:07:04 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/05 14:51:27 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/17 16:35:07 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 const char *first_tokens[] = {
 	"v",
+	"vn",
 	"f",
 	"mtllib",
 	"usemtl",
@@ -24,6 +25,7 @@ const char *first_tokens[] = {
 
 void (*line_parsers[])(char** tokens, t_obj *obj, uint32_t line_count) = {
 	&parse_vertex,
+	&parse_vertex_normal,
 	&parse_index,
 	&parse_mtllib,
 	&parse_usemtl,

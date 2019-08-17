@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 11:43:14 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/13 17:05:32 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/17 16:29:47 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void	parse_vertex_normal(char** tokens, t_obj *obj, uint32_t line_count)
 	if (i < 3)
 		throw_parsing_error(line_count, tokens[i], 
 				"Expected at least 3 float values");
-	// obj->vert_normals = ft_array_push(obj->vert_normals, &v, sizeof(t_vec4), obj->vert_normals_length++);
+	obj->normals = ft_array_push(obj->normals, &v, sizeof(t_vec4), obj->normals_len++);
 }

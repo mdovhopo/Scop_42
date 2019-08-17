@@ -5,10 +5,10 @@ float pitch = 0;
 
 void	dump_parced_object(t_obj obj, bool debug)
 {
-	printf("[Dump Vertex array of length %d]\n", obj.vert_len);
+	printf("[Dump Points array of length %d]\n", obj.points_len);
 	if (debug) {
-		for (int i = 0; i < obj.vert_len; i++) {
-			printf("v[%d]\t%+f %+f %+f\n", i, obj.vertices[i][0], obj.vertices[i][1], obj.vertices[i][2]);
+		for (int i = 0; i < obj.points_len; i++) {
+			printf("v[%d]\t%+f %+f %+f\n", i, obj.points[i][0], obj.points[i][1], obj.points[i][2]);
 		}
 	}
 	printf("[Dump Index array of length %d]\n", obj.indices_len);
@@ -16,6 +16,12 @@ void	dump_parced_object(t_obj obj, bool debug)
 		for (int i = 0; i < obj.indices_len; i++) {
 			printf("f[%d]\t%d %d %d\n", i, obj.indices[i][0], obj.indices[i][1], obj.indices[i][2]);
 		}
+	}
+	printf("[Dump Vertex array of length %d]\n", obj.vertices_len);
+	if (debug) {
+		// for (int i = 0; i < obj.indices_len; i++) {
+		// 	printf("f[%d]\t%d %d %d\n", i, obj.indices[i][0], obj.indices[i][1], obj.indices[i][2]);
+		// }
 	}
 }
 
@@ -67,7 +73,7 @@ int main(void)
 
 	ft_printf("####       Start        ####\n");
 	ft_time_start();
-	parse_obj_file(TEAPOT2_OBJ_PATH, &obj);
+	parse_obj_file(BMW_OBJ_MODEL, &obj);
 	ft_time_end("Parse time");
 	dump_parced_object(obj, false);
 	if (!gl_env_init("Scop", 1600, 900, &env))
@@ -76,16 +82,18 @@ int main(void)
 	print_gl_info();
 
 	init_buffers(&obj);
-	create_shader_prog(&(env.shader_prog));
-	create_camera(&env, &cam, &obj);
-	load_camera_projection(&cam, 45.0f, CAMERA_PERSPECTIVE, VEC2(0.1f, 10000.0f));
+	if (create_shader_prog(&(env.shader_prog)))
+	{
+		create_camera(&env, &cam, &obj);
+		load_camera_projection(&cam, 45.0f, CAMERA_PERSPECTIVE, VEC2(0.1f, 10000.0f));
 
-	if (glGetError() != GL_NO_ERROR)
-		ft_printf("WARNING glError: %d", glGetError());
+		if (glGetError() != GL_NO_ERROR)
+			ft_printf("WARNING glError: %d", glGetError());
 
-	render_loop(&env, &cam, &obj);
+		render_loop(&env, &cam, &obj);
+	}
 	glfwTerminate();
-	free(obj.vertices);
+	free(obj.points);
 	free(obj.indices);
 	ft_printf("#### IT IS FINALLY ENDED! ####\n");
 	return (0);

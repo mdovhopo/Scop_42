@@ -6,19 +6,39 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 11:58:00 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/14 12:02:45 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/17 16:36:37 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void	parse_index(char** tokens, t_obj *obj, uint32_t line_count)
+static void	pack_vertex(char **tokens, t_obj *obj, uint32_t line_count, int i)
 {
-	t_veci3	v;
+	int32_t		j = 3;
+	int32_t		err;
+	char		**index_data;
+	uint32_t	index;
+
+	while (--j > -1)
+	{
+		index = j == 2 ? 0 : i - j;
+		index_data = ft_strsplit(tokens[index], '/');
+		int v_index = ft_parse_int(index_data[0], &err) - 1;
+		int vn_index = ft_parse_int(index_data[1], &err) - 1;
+		t_vertex	vrt = {};
+		vrt.point = obj->points[v_index];
+		vrt.normal = obj->normals[vn_index];
+		obj->vertices = ft_array_push(obj->vertices, &vrt, sizeof(t_vertex), obj->vertices_len++);
+		free_2d_arr(index_data);
+		if (err)
+			throw_parsing_error(line_count, tokens[index], NULL);
+	}
+}
+
+void		parse_index(char** tokens, t_obj *obj, uint32_t line_count)
+{
 	int		length;
-	int		err;
 	int		i;
-	char	**index_data;
 
 	length = -1;
 	while(tokens[++length])
@@ -28,26 +48,5 @@ void	parse_index(char** tokens, t_obj *obj, uint32_t line_count)
 			"Expected at least 3 integer values.");
 	i = 1;
 	while (++i < length)
-	{
-		// TODO error handle stuff for 1/1/1 format
-		index_data = ft_strsplit(tokens[0], '/');
-		v[0] = ft_parse_int(index_data[0], &err) - 1;
-		free_2d_arr(index_data);
-		if (err)
-			throw_parsing_error(line_count, tokens[0], NULL);
-		//**********************
-		index_data = ft_strsplit(tokens[i - 1], '/');
-		v[1] = ft_parse_int( index_data[0], &err) - 1;
-		free_2d_arr(index_data);
-		if (err)
-			throw_parsing_error(line_count, tokens[i - 1], NULL);
-		//********************
-		index_data = ft_strsplit(tokens[i], '/');
-		v[2] = ft_parse_int(index_data[0], &err) - 1;
-		free_2d_arr(index_data);
-		if (err)
-			throw_parsing_error(line_count, tokens[i], NULL);
-		// printf("v[%d]\t%+f %+f %+f\n", i - 2, v[0], v[1], v[2]);
-		obj->indices = ft_array_push(obj->indices, &v, sizeof(t_veci3), obj->indices_len++);
-	}
+		pack_vertex(tokens, obj, line_count, i);
 }
