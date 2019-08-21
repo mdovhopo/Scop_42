@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 11:58:00 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/17 16:36:37 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/21 16:55:51 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,22 @@ static void	pack_vertex(char **tokens, t_obj *obj, uint32_t line_count, int i)
 	{
 		index = j == 2 ? 0 : i - j;
 		index_data = ft_strsplit(tokens[index], '/');
-		int v_index = ft_parse_int(index_data[0], &err) - 1;
-		int vn_index = ft_parse_int(index_data[1], &err) - 1;
 		t_vertex	vrt = {};
+		int v_index = ft_parse_int(index_data[0], &err) - 1;
 		vrt.point = obj->points[v_index];
-		vrt.normal = obj->normals[vn_index];
+		if (index_data[1] && index_data[1][0] == '\0') printf(YEL"WARNING no normal");
+		if (index_data[1] == NULL) {
+			if ((obj->vertices_len + 2) % 3 == 0) {
+				vrt.normal = ft_get_triangle_normal((t_vec4[]){
+					obj->vertices[obj->vertices_len - 1].point,
+					obj->vertices[obj->vertices_len].point,
+					vrt.point
+				});
+			}
+		} else {
+			int vn_index = ft_parse_int(index_data[1], &err) - 1;
+			vrt.normal = obj->normals[vn_index];
+		}
 		obj->vertices = ft_array_push(obj->vertices, &vrt, sizeof(t_vertex), obj->vertices_len++);
 		free_2d_arr(index_data);
 		if (err)

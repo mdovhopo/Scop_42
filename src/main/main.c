@@ -11,10 +11,10 @@ void	dump_parced_object(t_obj obj, bool debug)
 			printf("v[%d]\t%+f %+f %+f\n", i, obj.points[i][0], obj.points[i][1], obj.points[i][2]);
 		}
 	}
-	printf("[Dump Index array of length %d]\n", obj.indices_len);
+	printf("[Dump Normals array of length %d]\n", obj.normals_len);
 	if (debug) {
-		for (int i = 0; i < obj.indices_len; i++) {
-			printf("f[%d]\t%d %d %d\n", i, obj.indices[i][0], obj.indices[i][1], obj.indices[i][2]);
+		for (int i = 0; i < obj.normals_len; i++) {
+			printf("f[%d]\t%f %f %f\n", i, obj.normals[i][0], obj.normals[i][1], obj.normals[i][2]);
 		}
 	}
 	printf("[Dump Vertex array of length %d]\n", obj.vertices_len);
@@ -73,7 +73,7 @@ int main(void)
 
 	ft_printf("####       Start        ####\n");
 	ft_time_start();
-	parse_obj_file(BMW_OBJ_MODEL, &obj);
+	parse_obj_file(TEAPOT2_OBJ_PATH, &obj);
 	ft_time_end("Parse time");
 	dump_parced_object(obj, false);
 	if (!gl_env_init("Scop", 1600, 900, &env))
