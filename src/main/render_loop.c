@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 11:31:52 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/17 17:23:50 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/21 17:18:37 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	render_loop(t_gl_env *env, t_camera *cam, t_obj *obj)
 		model = mat_rotate(model, VEC3(0, 1, 0), DEG_TO_RAD(obj->rot[1]));
 		model = mat_rotate(model, VEC3(0, 0, 1), DEG_TO_RAD(obj->rot[2]));
 		glUniformMatrix4fv(cam->uniform_model_loc, 1, GL_TRUE, (float*)&model);
-		glDrawArrays(GL_TRIANGLES, 0, obj->points_len * 4);
+		glDrawArrays(GL_TRIANGLES, 0, obj->vertices_len * 4);
 		// glDrawElements(GL_TRIANGLES, obj->indices_len * 3, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(env->window);
 		glfwPollEvents();

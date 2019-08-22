@@ -73,7 +73,7 @@ int main(void)
 
 	ft_printf("####       Start        ####\n");
 	ft_time_start();
-	parse_obj_file(TEAPOT2_OBJ_PATH, &obj);
+	parse_obj_file(FORTY_TWO_OBJ_PATH, &obj);
 	ft_time_end("Parse time");
 	dump_parced_object(obj, false);
 	if (!gl_env_init("Scop", 1600, 900, &env))
