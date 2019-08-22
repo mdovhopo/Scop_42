@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 14:01:54 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/07 13:18:15 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/21 17:19:29 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,20 @@ typedef enum	e_obj_manage_type
 	OBJ_TRANSLATE
 }				t_obj_manage_type;
 
+typedef struct	s_vertex
+{
+	t_vec4	point;
+	t_vec4	normal;
+}				t_vertex;
+
 typedef struct	s_obj
 {
-	t_vec4				*vertices;
-	uint32_t			vert_len;
+	t_vertex			*vertices;
+	uint32_t			vertices_len;
+	t_vec4				*points;
+	uint32_t			points_len;
+	t_vec4				*normals;
+	uint32_t			normals_len;
 	t_veci3				*indices;
 	uint32_t			indices_len;
 	t_mtl				material;
@@ -60,6 +70,7 @@ int		ft_parse_int(char *s, int *err);
 */
 
 void	parse_index(char** tokens, t_obj *obj, uint32_t line_count);
+void	parse_vertex_normal(char** tokens, t_obj *obj, uint32_t line_count);
 void	parse_vertex(char** tokens, t_obj *obj, uint32_t line_count);
 void	parse_object(char** tokens, t_obj *obj, uint32_t line_count);
 void	parse_usemtl(char** tokens, t_obj *obj, uint32_t line_count);

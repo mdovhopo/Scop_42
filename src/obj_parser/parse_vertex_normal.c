@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_vertex.c                                     :+:      :+:    :+:   */
+/*   parse_vertex_normal.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/03 11:57:37 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/17 16:25:16 by tryckylake       ###   ########.fr       */
+/*   Created: 2019/08/12 11:43:14 by tryckylake        #+#    #+#             */
+/*   Updated: 2019/08/21 16:47:06 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void	parse_vertex(char** tokens, t_obj *obj, uint32_t line_count)
+void	parse_vertex_normal(char** tokens, t_obj *obj, uint32_t line_count)
 {
 	t_vec4	v;
 	int		i;
@@ -32,7 +32,5 @@ void	parse_vertex(char** tokens, t_obj *obj, uint32_t line_count)
 	if (i < 3)
 		throw_parsing_error(line_count, tokens[i], 
 				"Expected at least 3 float values");
-	if (vec_mag(obj->farest_point) < vec_mag(v))
-		obj->farest_point = v;
-	obj->points = ft_array_push(obj->points, &v, sizeof(t_vec4), obj->points_len++);
+	obj->normals = ft_array_push(obj->normals, &v, sizeof(t_vec4), obj->normals_len++);
 }

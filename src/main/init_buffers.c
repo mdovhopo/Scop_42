@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:37:24 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/07 17:22:28 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/21 17:19:26 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ void	init_buffers(t_obj *obj)
 	// glBindVertexArray(vao);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, obj->vert_len * sizeof(t_vec4), obj->vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, obj->vertices_len * sizeof(t_vertex), obj->vertices, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->indices_len * sizeof(t_veci3), obj->indices, GL_STATIC_DRAW);
+	// glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	// glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->indices_len * sizeof(t_veci3), obj->indices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(t_vec4), 0);
-	// glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(t_vertex), 0);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(t_vertex), (void*)(sizeof(t_vec4)));
 	glEnableVertexAttribArray(0);
-	// glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(1);
 }

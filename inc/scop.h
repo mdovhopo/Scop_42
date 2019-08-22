@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/07 14:53:05 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/17 16:59:51 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,14 @@ typedef struct	s_camera
 	uint32_t	uniform_model_loc;
 	uint32_t	uniform_view_loc;
 	uint32_t	uniform_proj_loc;
+	uint32_t	uniform_light_loc;
+	t_vec4		light_pos;
 	t_vec4		cam_pos;
 	t_vec4		cam_front;
 	t_vec4		cam_up;
 	float		cam_speed;
+	uint32_t	cam_rotate_radius;
+
 }				t_camera;
 
 typedef enum	e_camera_type
