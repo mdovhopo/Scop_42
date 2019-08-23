@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/17 16:59:51 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/23 17:23:26 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ extern float delta_time;
 extern float pitch;
 extern float yaw;
 
+extern float object_scale;
+
 #define VERTEX_SHADER_PATH		"./src/shaders/vertShader.vert"
 #define FRAGMENT_SHADER_PATH	"./src/shaders/fragShader.frag"
 
@@ -45,6 +47,8 @@ typedef struct	s_gl_env
 	uint32_t	w_width;
 	uint32_t	w_height;
 	uint32_t	shader_prog;
+	uint32_t	vao_object;
+	uint32_t	vao_floor;
 }				t_gl_env;
 
 typedef struct	s_camera
@@ -57,7 +61,6 @@ typedef struct	s_camera
 	uint32_t	uniform_view_loc;
 	uint32_t	uniform_proj_loc;
 	uint32_t	uniform_light_loc;
-	t_vec4		light_pos;
 	t_vec4		cam_pos;
 	t_vec4		cam_front;
 	t_vec4		cam_up;
@@ -86,7 +89,7 @@ bool	compile_shader(	uint32_t *shader_id,
 						const char* name);
 bool	link_shader_prog(uint32_t *prog_id, uint32_t *shaders, uint32_t length);
 bool	create_shader_prog(uint32_t *prog);
-void	init_buffers(t_obj *obj);
+void	init_buffers(t_obj *obj, t_gl_env *e);
 
 /*
 ** Camera

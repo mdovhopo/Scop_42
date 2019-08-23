@@ -78,7 +78,7 @@ $(EXECUTABLE): $(OBJECTS) $(LIBFT_BIN)
 	@$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(OBJECTS) $(LIBS) -o $@
 	@echo "\033[92m[Target $(EXECUTABLE) Has been created, run ./$@]\033[0m"
 	@echo "\033[92m[Starting $(EXECUTABLE) ...]\033[0m"
-	# @./$(EXECUTABLE)
+	@./$(EXECUTABLE)
 	# @valgrind --leak-check=full -s ./$(EXECUTABLE)
 
 %.o: %.c $(INCLUDES)

@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 11:58:00 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/23 13:27:55 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/23 16:52:01 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	pack_vertex(char **tokens, t_obj *obj, uint32_t line_count, int i)
 			}
 		// } else {
 			// int vn_index = ft_parse_int(index_data[1], &err) - 1;
-			// vrt.normal = obj->normals[vn_index] * FLOAT_TO_VEC(-1.0f);
+			// vrt.normal = obj->normals[vn_index];
 		// }
 		obj->vertices = ft_array_push(obj->vertices, &vrt, sizeof(t_vertex), obj->vertices_len++);
 		free_2d_arr(index_data);

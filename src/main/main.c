@@ -1,8 +1,5 @@
 #include "scop.h"
 
-float yaw = -90.0f;
-float pitch = 0;
-
 void	dump_parced_object(t_obj obj, bool debug)
 {
 	printf("[Dump Points array of length %d]\n", obj.points_len);
@@ -28,44 +25,6 @@ void	dump_parced_object(t_obj obj, bool debug)
 	}
 }
 
-float delta_time = 0.0f;
-float last_frame = 0.0f;
-
-float lastX;
-float lastY;
-
-bool firstMouse = true;
-
-void mouse_callback(GLFWwindow* window, double xpos, double ypos)
-{
-    if(firstMouse)
-    {
-        lastX = xpos;
-        lastY = ypos;
-        firstMouse = false;
-    }
-
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos; 
-	lastX = xpos;
-	lastY = ypos;
-
-	float sensitivity = 0.05f;
-	xoffset *= sensitivity;
-	yoffset *= sensitivity;
-
-	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
-	{
-		// static uint32_t num = 0;
-		// printf("Mouse clicked %d %f %f\n", ++num, yoffset ,xoffset);
-		yaw   += xoffset;
-		pitch -= yoffset;
-		if(pitch > 89.0f)
-			pitch =  89.0f;
-		if(pitch < -89.0f)
-			pitch = -89.0f;
-	}
-}
 
 
 int main(void)
@@ -74,17 +33,15 @@ int main(void)
 	t_camera	cam = {};
 	t_obj		obj = {};
 
-	ft_printf("####       Start        ####\n");
 	ft_time_start();
-	parse_obj_file(BMW_OBJ_MODEL, &obj);
+	parse_obj_file(PORSCHE_911_OBJ_MODEL, &obj);
 	ft_time_end("Parse time");
 	dump_parced_object(obj, false);
 	if (!gl_env_init("Scop", 1600, 900, &env))
 		return (gl_error_report("OpenGL could not init :(", -1));
-	glfwSetCursorPosCallback(env.window, mouse_callback);
 	print_gl_info();
 
-	init_buffers(&obj);
+	init_buffers(&obj, &env);
 	if (create_shader_prog(&(env.shader_prog)))
 	{
 		create_camera(&env, &cam, &obj);
@@ -97,7 +54,6 @@ int main(void)
 	}
 	glfwTerminate();
 	free(obj.points);
-	free(obj.indices);
-	ft_printf("#### IT IS FINALLY ENDED! ####\n");
+	free(obj.vertices);
 	return (0);
 }

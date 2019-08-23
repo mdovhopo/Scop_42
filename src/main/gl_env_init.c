@@ -10,9 +10,56 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-float lastX = 400, lastY = 300;
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	if (yoffset) {
+		if (yoffset < 0) {
+			object_scale = clamp(0.1f, 100.0f, object_scale += 0.1f);
+		} else {
+			object_scale = clamp(0.1f, 100.0f, object_scale -= 0.1f);
+		}
+	}
+}
+
+float yaw = -90.0f;
+float pitch = 0;
+float lastX = 400;
+float lastY = 300;
 
 
+float delta_time = 0.0f;
+float last_frame = 0.0f;
+
+float lastX;
+float lastY;
+
+bool firstMouse = true;
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    if(firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; 
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.05f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+	{
+		yaw   += xoffset;
+		pitch -= yoffset;
+		pitch = clamp(-89.0f, 89.0f, pitch);
+	}
+}
 
 # if !defined(__MACH__) && !defined(__APPLE__) // on MacOS i have OpenGL 4.1 and this stuff is not working on <= 4.4
 void GLAPIENTRY
@@ -108,9 +155,10 @@ bool	gl_env_init(const char *window_name,
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	glViewport(0, 0, width, height);
-	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glfwSetInputMode(e->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
 	glfwSetFramebufferSizeCallback(e->window, framebuffer_size_callback);
+	glfwSetScrollCallback(e->window, scroll_callback);
+	glfwSetCursorPosCallback(e->window, mouse_callback);
 	# if !defined(__MACH__) && !defined(__APPLE__) // on MacOS i have OpenGL 4.1 and this stuff is not working on <= 4.4
 	// glDebugMessageCallback(MessageCallback, 0);
 	GLint flags = 0; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);

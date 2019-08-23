@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 11:31:52 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/23 13:20:07 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/23 17:32:57 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ void processInput(GLFWwindow *window, t_camera *cam, t_obj *obj)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
-	float cameraSpeed = cam->cam_speed * delta_time; // adjust accordingly
-	// TODO MacOS Clang cant multiply float and vector. Do smth with this 
+	float cameraSpeed = cam->cam_speed * delta_time;
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
 	{
 		obj->rot = VEC3(0, 0, 0);
 		obj->trans = VEC3(0, 0, 0);
 		cam->cam_pos = VEC3(
-			0, 
-			fabsf(obj->farest_point[1]) / 2, 
-			(fabsf(obj->farest_point[2]) + fabsf(obj->farest_point[0])) * 2
+			cam->cam_rotate_radius * 2, 
+			cam->cam_rotate_radius * 5, 
+			(int32_t)cam->cam_rotate_radius * -2
 		);
+		object_scale = 1.0f;
 		pitch = 0.0f;
 		yaw = -90.0f;
 	}
@@ -43,17 +43,17 @@ void processInput(GLFWwindow *window, t_camera *cam, t_obj *obj)
 	if (obj->manage_type == OBJ_ROTATE)
 	{
 		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-			obj->rot[0] = clamp(-180.0f, 180.0f, obj->rot[0] + 100.0f * delta_time);
+			obj->rot[0] = loop(-180.0f, 180.0f, obj->rot[0] + 100.0f * delta_time);
 		else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-			obj->rot[0] = clamp(-180.0f, 180.0f, obj->rot[0] - 100.0f * delta_time);
+			obj->rot[0] = loop(-180.0f, 180.0f, obj->rot[0] - 100.0f * delta_time);
 		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-			obj->rot[1] = clamp(-180.0f, 180.0f, obj->rot[1] + 100.0f * delta_time);
+			obj->rot[1] = loop(-180.0f, 180.0f, obj->rot[1] + 100.0f * delta_time);
 		else if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-			obj->rot[1] = clamp(-180.0f, 180.0f, obj->rot[1] - 100.0f * delta_time);
+			obj->rot[1] = loop(-180.0f, 180.0f, obj->rot[1] - 100.0f * delta_time);
 		if (glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS)
-			obj->rot[2] = clamp(-180.0f, 180.0f, obj->rot[2] + 100.0f * delta_time);
+			obj->rot[2] = loop(-180.0f, 180.0f, obj->rot[2] + 100.0f * delta_time);
 		else if (glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS)
-			obj->rot[2] = clamp(-180.0f, 180.0f, obj->rot[2] - 100.0f * delta_time);
+			obj->rot[2] = loop(-180.0f, 180.0f, obj->rot[2] - 100.0f * delta_time);
 	}
 	else if (obj->manage_type == OBJ_TRANSLATE)
 	{
@@ -115,9 +115,13 @@ void	render_loop(t_gl_env *env, t_camera *cam, t_obj *obj)
 		model = mat_rotate(model, VEC3(1, 0, 0), DEG_TO_RAD(obj->rot[0]));
 		model = mat_rotate(model, VEC3(0, 1, 0), DEG_TO_RAD(obj->rot[1]));
 		model = mat_rotate(model, VEC3(0, 0, 1), DEG_TO_RAD(obj->rot[2]));
+		model = mat_scale(model, FLOAT_TO_VEC(object_scale));
 		glUniformMatrix4fv(cam->uniform_model_loc, 1, GL_TRUE, (float*)&model);
+		glUniform4fv(cam->uniform_light_loc, 1, (float*)&(cam->cam_pos));
+		glBindVertexArray(env->vao_object);
 		glDrawArrays(GL_TRIANGLES, 0, obj->vertices_len);
-		// glDrawElements(GL_TRIANGLES, obj->indices_len * 3, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(env->vao_floor);
+		glDrawArrays(GL_TRIANGLES, 0, obj->vertices_len);
 		glfwSwapBuffers(env->window);
 		glfwPollEvents();
 	}

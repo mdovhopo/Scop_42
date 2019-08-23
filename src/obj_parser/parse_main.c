@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 12:07:04 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/17 16:35:07 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/23 17:08:18 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	parse_obj_file(const char *path, t_obj *obj)
 {
 	char *line = NULL;
 	uint32_t line_count = 1;
-	ft_memset(obj, 0, sizeof(obj));
 	while(ft_read_next_line(path, &line) > 0)
 	{
 		char *trimmed_line = ft_strtrim(line);

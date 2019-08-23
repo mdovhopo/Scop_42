@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 14:01:54 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/21 17:19:29 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/23 15:13:56 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,7 @@ typedef struct	s_obj
 	uint32_t			points_len;
 	t_vec4				*normals;
 	uint32_t			normals_len;
-	t_veci3				*indices;
-	uint32_t			indices_len;
-	t_mtl				material;
 	t_vec4				farest_point;
-	float				smooth;
 	t_obj_manage_type	manage_type;
 	t_vec4				rot;
 	t_vec4				trans;

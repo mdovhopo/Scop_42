@@ -6,11 +6,13 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:49:43 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/23 13:18:56 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/23 16:11:05 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+float object_scale = 1.0f;
 
 void	create_camera(t_gl_env *env, t_camera *cam, t_obj *obj)
 {
@@ -28,18 +30,14 @@ void	create_camera(t_gl_env *env, t_camera *cam, t_obj *obj)
 			fabsf(obj->farest_point[0]) + 
 			fabsf(obj->farest_point[1]) + 
 			fabsf(obj->farest_point[2]);
+	cam->cam_rotate_radius = vec_mag(obj->farest_point) * 2;
 	cam->cam_pos = VEC3(
-		0, 
-		fabsf(obj->farest_point[1]) / 2, 
-		(fabsf(obj->farest_point[2]) + fabsf(obj->farest_point[0])) * 2
+		// cam->cam_rotate_radius * 2, 
+		0,
+		cam->cam_rotate_radius * 5, 
+		(int32_t)cam->cam_rotate_radius * -2
 	);
 	cam->cam_front = VEC3(0, 0, 0);
 	cam->cam_up = VEC3(0, 1, 0);
-	cam->cam_rotate_radius = vec_mag(obj->farest_point) * 2;
-	cam->light_pos = VEC3(
-		fabsf(obj->farest_point[0]) * 2, 
-		fabsf(obj->farest_point[1]) * 2, 
-		(fabsf(obj->farest_point[2]) + fabsf(obj->farest_point[0])) * 2
-	);
 	glUniform4fv(cam->uniform_light_loc, 1, (float*)&(cam->cam_pos));
 }
