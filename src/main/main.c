@@ -19,9 +19,12 @@ void	dump_parced_object(t_obj obj, bool debug)
 	}
 	printf("[Dump Vertex array of length %d]\n", obj.vertices_len);
 	if (debug) {
-		// for (int i = 0; i < obj.indices_len; i++) {
-		// 	printf("f[%d]\t%d %d %d\n", i, obj.indices[i][0], obj.indices[i][1], obj.indices[i][2]);
-		// }
+		for (int i = 0; i < obj.vertices_len; i++) {
+			t_vec4 p = obj.vertices[i].point;
+			t_vec4 n = obj.vertices[i].normal;
+			printf("v [%d]\t%+f %+f %+f\n", i, p[0], p[1], p[2]);
+			printf("vn[%d]\t%+f +%f %+f\n", i, n[0], n[1], n[2]);
+		}
 	}
 }
 
@@ -73,7 +76,7 @@ int main(void)
 
 	ft_printf("####       Start        ####\n");
 	ft_time_start();
-	parse_obj_file(FORTY_TWO_OBJ_PATH, &obj);
+	parse_obj_file(BMW_OBJ_MODEL, &obj);
 	ft_time_end("Parse time");
 	dump_parced_object(obj, false);
 	if (!gl_env_init("Scop", 1600, 900, &env))

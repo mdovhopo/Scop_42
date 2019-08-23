@@ -18,5 +18,5 @@ void main() {
 	gl_Position = u_proj * u_view * u_model * a_pos;
 	vertex_color = object_color;
 	frag_pos = u_model * a_pos; 
-	normal = a_normal;
+	normal = u_model * a_normal;
 }
