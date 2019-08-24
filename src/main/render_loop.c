@@ -6,7 +6,7 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 11:31:52 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/23 17:32:57 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/23 20:21:25 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ void	render_loop(t_gl_env *env, t_camera *cam, t_obj *obj)
 		glUniform4fv(cam->uniform_light_loc, 1, (float*)&(cam->cam_pos));
 		glBindVertexArray(env->vao_object);
 		glDrawArrays(GL_TRIANGLES, 0, obj->vertices_len);
-		glBindVertexArray(env->vao_floor);
-		glDrawArrays(GL_TRIANGLES, 0, obj->vertices_len);
+		// glBindVertexArray(env->vao_floor);
+		// glDrawArrays(GL_TRIANGLES, 0, obj->vertices_len);
 		glfwSwapBuffers(env->window);
 		glfwPollEvents();
 	}
