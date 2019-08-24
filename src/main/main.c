@@ -34,7 +34,7 @@ int main(void)
 	t_obj		obj = {};
 
 	ft_time_start();
-	parse_obj_file(BUGATTI_OBJ_MODEL, &obj);
+	parse_obj_file(BMW_OBJ_MODEL, &obj);
 	ft_time_end("Parse time");
 	dump_parced_object(obj, false);
 	if (!gl_env_init("Scop", 1600, 900, &env))

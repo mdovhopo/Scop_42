@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scop.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/23 17:23:26 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/24 15:05:23 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdio.h>
 # include <glad/glad.h>
 # include <GLFW/glfw3.h>
-# include <cglm/cglm.h>
 
 // Camera rotaion stuff
 

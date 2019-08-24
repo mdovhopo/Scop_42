@@ -1,9 +1,9 @@
 #version 410 core
 
-// layout (location = 0) in vec3 pos;
-// layout (location = 1) in vec3 color;
-attribute vec4 a_pos;
-attribute vec4 a_normal;
+layout (location = 0) in vec4 a_pos;
+layout (location = 1) in vec4 a_normal;
+// attribute vec4 a_pos;
+// attribute vec4 a_normal;
 
 out vec4 vertex_color;
 out vec4 normal;
