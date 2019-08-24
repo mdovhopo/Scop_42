@@ -6,6 +6,13 @@ This project is written using C99 and OpenGL 4.1 with GLSL 4.1
 # Dependencies
 - [GLFW lib](https://www.glfw.org/docs/latest/compile.html)
 
+You can install those for Linux Ubuntu 18.04 by
+```sh
+   sudo apt-get update
+   sudo apt-get install libglfw3
+   sudo apt-get install libglfw3-dev
+```
+
 for MacOs there is compiled version of glfw
 
 ## TODO
