@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+         #
+#    By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 15:11:01 by mdovhopo          #+#    #+#              #
-#    Updated: 2019/08/18 20:16:04 by tryckylake       ###   ########.fr        #
+#    Updated: 2019/08/24 17:24:07 by mdovhopo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SOURCES		   += $(wildcard src/utils/*.c)
 SOURCES		   += $(wildcard src/shaders/*.c)
 SOURCES		   += $(wildcard src/camera/*.c)
 SOURCES		   += $(wildcard src/obj_parser/*.c)
+SOURCES		   += $(wildcard src/parse_command_line/*.c)
 SOURCES		   += $(GLAD_SRC)
 OBJECTS			= $(SOURCES:.c=.o)
 
@@ -78,7 +79,7 @@ $(EXECUTABLE): $(OBJECTS) $(LIBFT_BIN)
 	@$(CC) $(STD) $(FLAGS) $(INCLUDE_DIRS) $(OBJECTS) $(LIBS) -o $@
 	@echo "\033[92m[Target $(EXECUTABLE) Has been created, run ./$@]\033[0m"
 	@echo "\033[92m[Starting $(EXECUTABLE) ...]\033[0m"
-	@./$(EXECUTABLE)
+	# @./$(EXECUTABLE)
 	# @valgrind --leak-check=full -s ./$(EXECUTABLE)
 
 %.o: %.c $(INCLUDES)

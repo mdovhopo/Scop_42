@@ -145,7 +145,7 @@ bool	gl_env_init(const char *window_name,
 	// debug
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);  
 	glfwSetErrorCallback(error_callback);
-	e->window = glfwCreateWindow(w, h, "Scop", NULL, NULL);
+	e->window = glfwCreateWindow(w, h, window_name, NULL, NULL);
 	if (!(e->window))
 		return (gl_error_report("Could not create window :(", 0));
 	glfwGetFramebufferSize(e->window, &width, &height);

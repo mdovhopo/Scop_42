@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 12:06:11 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/03 13:18:44 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/24 16:17:01 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int32_t	find_str_in_array(char** arr, char* to_find)
 		i++;
 		arr++;
 	}
-	return (-1);
+	return (UNKNOWN_TOKEN);
 }
 
 void	free_2d_arr(char **arr)

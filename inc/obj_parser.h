@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_parser.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 14:01:54 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/23 15:13:56 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/24 16:16:47 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ typedef enum	e_first_token
 	MTLLIB,
 	USEMTL,
 	OBJECT,
-	SMOOTH
+	SMOOTH,
+	UNKNOWN_TOKEN
 }				t_first_token;
 
 typedef	struct	s_mtl

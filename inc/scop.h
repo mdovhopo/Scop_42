@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/24 15:05:23 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/08/24 17:44:27 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct	s_gl_env
 	uint32_t	shader_prog;
 	uint32_t	vao_object;
 	uint32_t	vao_floor;
+	char		*obj_file_name;
+	char		*window_name;
 }				t_gl_env;
 
 typedef struct	s_camera
@@ -107,7 +109,7 @@ void	render_loop(t_gl_env *env, t_camera *cam, t_obj *obj);
 /*
 ** Utils
 */
-
+void	parse_flags(t_gl_env *env, t_obj *obj, int argc, char **argv);
 void	get_delta_time(void);
 void	print_gl_info(void);
 ssize_t	get_file_size(const char *path);
@@ -119,5 +121,20 @@ char	*read_file(const char *path);
 
 int32_t	gl_error_report(const char *msg, const int32_t exit_code);
 
+/*
+** Parse comandline args
+*/
+
+typedef enum	e_handler_type
+{
+	SHOW_HELP = 0,
+	GET_FILE,
+	GET_WINDOW_NAME,
+	UNKNOWN_FLAG
+}				t_handler_type;
+
+void	show_help(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name);
+void	get_file(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name);
+void	get_window_name(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name);
 
 #endif
