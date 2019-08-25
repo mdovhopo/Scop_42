@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 16:25:29 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/08/25 16:46:06 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/08/25 17:50:13 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int main(int argc, char **argv)
 	t_obj		obj = {};
 
 	parse_flags(&env, &obj, argc, argv);
-	// return 0;
 	ft_time_start();
 	parse_obj_file(env.obj_file_name, &obj);
 	ft_time_end("Parse time");
