@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_flags.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 16:21:39 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/08/25 17:49:00 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/08/25 22:16:10 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ void		parse_flags(t_gl_env *env, t_obj *obj, int argc, char **argv)
 	if (argc == 1)
 		g_flags_callbacks[SHOW_HELP](NULL, NULL, NULL, NULL);
 	i = 0;
+	if (argc > 10)
+		exit(ft_printf(RED"ERROR: "RESET
+				"Got Too many params: %d\n", argc));
 	obj->color = VEC(0.337254f, 0.396078f, 0.450980f, 1.0f);
 	while (++i < argc)
 	{

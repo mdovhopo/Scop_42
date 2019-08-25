@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+         #
+#    By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 15:11:01 by mdovhopo          #+#    #+#              #
-#    Updated: 2019/08/25 17:50:27 by mdovhopo         ###   ########.fr        #
+#    Updated: 2019/08/25 20:36:59 by tryckylake       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIB_DIR			= ./lib
 # Different lib linking for Linux and OSX
 ifeq ($(UNAME_S), Linux)
 	OS_NAME		= Linux
-	LIBS	= -lglfw -lGL -lm \
+	LIBS	= -lglfw3 -lGL -lm \
 				-lXrandr  -lX11 \
 				-lXxf86vm -lpthread -ldl
 endif
