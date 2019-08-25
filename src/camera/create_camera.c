@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_camera.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:49:43 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/23 16:11:05 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/25 15:13:32 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	create_camera(t_gl_env *env, t_camera *cam, t_obj *obj)
 	cam->uniform_proj_loc = glGetUniformLocation(env->shader_prog, "u_proj");
 	cam->uniform_view_loc = glGetUniformLocation(env->shader_prog, "u_view");
 	cam->uniform_light_loc = glGetUniformLocation(env->shader_prog, "u_light_pos");
+	cam->uniform_obj_color = glGetUniformLocation(env->shader_prog, "u_obj_color");
 	cam->width = env->w_width;
 	cam->height = env->w_height;
 	cam->cam_speed = 

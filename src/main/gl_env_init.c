@@ -125,36 +125,44 @@ void APIENTRY glDebugOutput(GLenum source,
 }
 #endif
 
-bool	gl_env_init(const char *window_name,
-				const uint32_t w,
-				const uint32_t h,
-				t_gl_env *e)
+bool	gl_env_init(t_gl_env *e)
 {
-	int width;
-	int height;
+	GLFWmonitor*		monitor;
+	const GLFWvidmode*	mode;
 
-	e->w_width = w;
-	e->w_height = h;
-	if (!glfwInit()) {
+	if (!glfwInit())
 		return (false);
-	}
+	monitor = NULL;
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); //for mac compatibility
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	// debug
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);  
 	glfwSetErrorCallback(error_callback);
-	e->window = glfwCreateWindow(w, h, window_name, NULL, NULL);
+	if (e->w_width == 0 || e->w_height == 0) {
+		monitor = glfwGetPrimaryMonitor();
+		mode = glfwGetVideoMode(monitor);
+		e->w_width = mode->width;
+		e->w_height = mode->height;
+		glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+		glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+		glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+		glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+		e->window = glfwCreateWindow(e->w_width, e->w_height, e->window_name, monitor, NULL);
+		glfwSetWindowMonitor(e->window, monitor, 0, 0, e->w_width, e->w_height, mode->refreshRate);
+	}
+	else
+		e->window = glfwCreateWindow(e->w_width, e->w_height, e->window_name, NULL, NULL);
 	if (!(e->window))
 		return (gl_error_report("Could not create window :(", 0));
-	glfwGetFramebufferSize(e->window, &width, &height);
+	glfwGetFramebufferSize(e->window, (int*)&e->w_width, (int*)&e->w_height);
 	glfwMakeContextCurrent(e->window);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		return (gl_error_report("Could not load GL functions :(", 0));
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
-	glViewport(0, 0, width, height);
+	glViewport(0, 0, e->w_width, e->w_height);
 	glfwSetInputMode(e->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
 	glfwSetFramebufferSizeCallback(e->window, framebuffer_size_callback);
 	glfwSetScrollCallback(e->window, scroll_callback);

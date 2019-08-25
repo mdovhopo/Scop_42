@@ -2,15 +2,15 @@
 
 out vec4 out_frag_color;
 
-in vec4 vertex_color;
 in vec4 normal;
 in vec4 frag_pos;
 
 uniform vec4 u_light_pos;
 uniform vec4 u_view_pos;
+uniform vec4 u_obj_color;
 
 void main() {
-	vec4 object_color = vec4(0.337254f, 0.396078f, 0.450980f, 1.0f);
+	// vec4 object_color = vec4(0.337254f, 0.396078f, 0.450980f, 1.0f);
 	vec4 light_color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	// ambient
 	float ambient_light_stringth = 0.1f;
@@ -28,6 +28,6 @@ void main() {
 	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), 64);
 	vec4 specular = vec4(0, 0, 0, 0);//spec_strength * spec * light_color;
 
-	vec4 result = (ambient + diffuse + specular) * object_color;
+	vec4 result = (ambient + diffuse + specular) * u_obj_color;
 	out_frag_color = result;
 }

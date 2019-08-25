@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 16:25:29 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/08/24 17:48:11 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/08/25 16:46:06 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ int main(int argc, char **argv)
 	t_obj		obj = {};
 
 	parse_flags(&env, &obj, argc, argv);
+	// return 0;
 	ft_time_start();
 	parse_obj_file(env.obj_file_name, &obj);
-	// parse_obj_file(BUGATTI_OBJ_MODEL, &obj);
 	ft_time_end("Parse time");
 	dump_parced_object(obj, false);
-	if (!gl_env_init(env.window_name, 1600, 900, &env))
+	if (!gl_env_init(&env))
 		return (gl_error_report("OpenGL could not init :(", -1));
 	print_gl_info();
 
@@ -66,8 +66,10 @@ int main(int argc, char **argv)
 
 		render_loop(&env, &cam, &obj);
 	}
+	glfwDestroyWindow(env.window);
 	glfwTerminate();
 	free(obj.points);
 	free(obj.vertices);
+	free(env.window_name);
 	return (0);
 }

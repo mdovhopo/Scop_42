@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 14:01:54 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/24 16:16:47 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/08/25 15:06:12 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct	s_obj
 	t_obj_manage_type	manage_type;
 	t_vec4				rot;
 	t_vec4				trans;
+	t_vec4				color;
 }				t_obj;
 
 void	parse_obj_file(const char *path, t_obj *obj);

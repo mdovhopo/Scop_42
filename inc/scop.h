@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/24 17:44:27 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/08/25 16:21:16 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct	s_camera
 	uint32_t	uniform_view_loc;
 	uint32_t	uniform_proj_loc;
 	uint32_t	uniform_light_loc;
+	uint32_t	uniform_obj_color;
 	t_vec4		cam_pos;
 	t_vec4		cam_front;
 	t_vec4		cam_up;
@@ -80,10 +81,7 @@ typedef enum	e_camera_type
 ** Init enviroment
 */
 
-bool	gl_env_init(const char *window_name,
-				const uint32_t w,
-				const uint32_t h,
-				t_gl_env *e);
+bool	gl_env_init(t_gl_env *e);
 bool	compile_shader(	uint32_t *shader_id,
 						const char* source,
 						int32_t type,
@@ -130,11 +128,15 @@ typedef enum	e_handler_type
 	SHOW_HELP = 0,
 	GET_FILE,
 	GET_WINDOW_NAME,
+	GET_COLOR,
+	GET_SCREEN_SIZE,
 	UNKNOWN_FLAG
 }				t_handler_type;
 
 void	show_help(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name);
 void	get_file(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name);
 void	get_window_name(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name);
+void	get_color(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name);
+void	get_screen_size(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name);
 
 #endif

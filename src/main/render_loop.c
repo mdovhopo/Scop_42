@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_loop.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 11:31:52 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/23 20:21:25 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/08/25 15:14:14 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	render_loop(t_gl_env *env, t_camera *cam, t_obj *obj)
 		model = mat_scale(model, FLOAT_TO_VEC(object_scale));
 		glUniformMatrix4fv(cam->uniform_model_loc, 1, GL_TRUE, (float*)&model);
 		glUniform4fv(cam->uniform_light_loc, 1, (float*)&(cam->cam_pos));
+		glUniform4fv(cam->uniform_obj_color, 1, (float*)&(obj->color));
 		glBindVertexArray(env->vao_object);
 		glDrawArrays(GL_TRIANGLES, 0, obj->vertices_len);
 		// glBindVertexArray(env->vao_floor);

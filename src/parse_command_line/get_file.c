@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 17:06:41 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/08/24 18:00:28 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/08/25 16:15:27 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	get_file(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name)
 		exit(ft_printf(RED"ERROR: "RESET
 						"File must be .obj . (--help)\n"));
 	env->obj_file_name = parm_name;
-	env->window_name = parm_name;
+	env->window_name = ft_strdup(parm_name);
 }

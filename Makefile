@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+         #
+#    By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 15:11:01 by mdovhopo          #+#    #+#              #
-#    Updated: 2019/08/25 00:13:29 by tryckylake       ###   ########.fr        #
+#    Updated: 2019/08/25 16:00:19 by mdovhopo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ OBJECTS			= $(SOURCES:.c=.o)
 INCLUDES		=
 
 CFLAGS 			= -c -Wall -pedantic
-CC				= clang -g
+CC				= clang -O3
 EXECUTABLE		= sad_cat
 
 .PHONY: all clean
