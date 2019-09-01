@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scop.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/25 16:21:16 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/01 13:06:16 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "libft.h"
 # include "obj_parser.h"
+
+# include "stb_image.h"
 
 # include <stdio.h>
 # include <glad/glad.h>

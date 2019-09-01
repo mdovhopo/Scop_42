@@ -6,10 +6,11 @@
 /*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 16:25:29 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/08/25 22:16:51 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/09/01 13:18:16 by tryckylake       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# define STB_IMAGE_IMPLEMENTATION
 #include "scop.h"
 
 void	dump_parced_object(t_obj obj, bool debug)
@@ -54,6 +55,19 @@ int main(int argc, char **argv)
 		return (gl_error_report("OpenGL could not init :(", -1));
 	print_gl_info();
 
+	int width, height, nrChannels;
+	unsigned char *data = stbi_load("./assets/wall.jpg", &width, &height, &nrChannels, 0); 
+	if (data)  {
+		unsigned int texture;
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    	glGenerateMipmap(GL_TEXTURE_2D);
+		printf(GRN"loaded\n"RESET);
+	}
+	else printf("not loaded\n");
+	// return 0;
+
 	init_buffers(&obj, &env);
 	if (create_shader_prog(&(env.shader_prog)))
 	{
@@ -70,5 +84,6 @@ int main(int argc, char **argv)
 	free(obj.points);
 	free(obj.vertices);
 	free(env.window_name);
+	stbi_image_free(data);
 	return (0);
 }

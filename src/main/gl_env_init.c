@@ -160,6 +160,10 @@ bool	gl_env_init(t_gl_env *e)
 	glfwMakeContextCurrent(e->window);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		return (gl_error_report("Could not load GL functions :(", 0));
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
 	glViewport(0, 0, e->w_width, e->w_height);
