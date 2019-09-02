@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+         #
+#    By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 15:11:01 by mdovhopo          #+#    #+#              #
-#    Updated: 2019/08/25 20:36:59 by tryckylake       ###   ########.fr        #
+#    Updated: 2019/09/02 14:07:47 by mdovhopo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,10 +40,13 @@ LIBFT_BIN		= $(LIBFT_PATH)/libft.a
 
 LIBS		   += -L $(LIBFT_PATH) -lft
 
+STB_IMAGE_PATH	= $(LIB_DIR)/stb_image
+
 INCLUDE_DIRS   += -I $(LIB_DIR)/glad/include \
 				  -I ./inc \
 				  -I $(LIBFT_PATH)/inc \
-				  -I $(LIB_DIR)/cglm/include
+				  -I $(LIB_DIR)/cglm/include \
+				  -I $(STB_IMAGE_PATH)/inc
 
 GLAD_SRC		= $(LIB_DIR)/glad/src/glad.c
 

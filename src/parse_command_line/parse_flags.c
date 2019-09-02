@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   parse_flags.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 16:21:39 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/08/25 22:16:10 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/09/02 14:17:39 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-const char	*g_flags_names[] = {
+const char		*g_flags_names[] = {
 	"--help",
 	"--file",
 	"--window-name",
 	"--color",
 	"--window-size",
+	"--texture",
 	NULL
 };
 
@@ -34,22 +35,24 @@ t_handler_type	find_flag_id(char *flag_name)
 	return (UNKNOWN_FLAG);
 }
 
-void		(*g_flags_callbacks[])(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name) = {
+void			(*g_flags_callbacks[])(t_gl_env *env, t_obj *obj,
+									int *curr_arg, char *parm_name) = {
 	&show_help,
 	&get_file,
 	&get_window_name,
 	&get_color,
-	&get_screen_size
+	&get_screen_size,
+	&get_texture
 };
 
-static void	unknown_flag(char *flag_name)
+static void		unknown_flag(char *flag_name)
 {
 	ft_printf(RED"ERROR: "RESET"Unexpected flag [%s]\n", flag_name);
 	ft_printf("Checkout usage manual: --help\n");
 	exit(1);
 }
 
-void		parse_flags(t_gl_env *env, t_obj *obj, int argc, char **argv)
+void			parse_flags(t_gl_env *env, t_obj *obj, int argc, char **argv)
 {
 	int				i;
 	t_handler_type	type;
@@ -60,7 +63,7 @@ void		parse_flags(t_gl_env *env, t_obj *obj, int argc, char **argv)
 	if (argc > 10)
 		exit(ft_printf(RED"ERROR: "RESET
 				"Got Too many params: %d\n", argc));
-	obj->color = VEC(0.337254f, 0.396078f, 0.450980f, 1.0f);
+	obj->color = DEFAULT_OBJECT_COLOR;
 	while (++i < argc)
 	{
 		type = find_flag_id(argv[i]);

@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 14:01:54 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/25 15:06:12 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/02 13:48:12 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ typedef enum	e_first_token
 	UNKNOWN_TOKEN
 }				t_first_token;
 
-typedef	struct	s_mtl
+typedef	struct	s_texture
 {
-	char *name;
-}				t_mtl;
+	uint8_t		*data;
+	int			width;
+	int			height;
+	uint32_t	gl_text_id;
+}				t_texture;
 
 typedef enum	e_obj_manage_type
 {
@@ -56,38 +59,40 @@ typedef struct	s_obj
 	t_vec4				rot;
 	t_vec4				trans;
 	t_vec4				color;
+	t_texture			texture;
+	bool				show_texture;
 }				t_obj;
 
-void	parse_obj_file(const char *path, t_obj *obj);
-
-float	ft_parse_float(char *s, int *err);
-int		ft_parse_int(char *s, int *err);
+void			parse_obj_file(const char *path, t_obj *obj);
+float			ft_parse_float(char *s, int *err);
+int				ft_parse_int(char *s, int *err);
 
 /*
 ** line parsers
 */
 
-void	parse_index(char** tokens, t_obj *obj, uint32_t line_count);
-void	parse_vertex_normal(char** tokens, t_obj *obj, uint32_t line_count);
-void	parse_vertex(char** tokens, t_obj *obj, uint32_t line_count);
-void	parse_object(char** tokens, t_obj *obj, uint32_t line_count);
-void	parse_usemtl(char** tokens, t_obj *obj, uint32_t line_count);
-void	parse_mtllib(char** tokens, t_obj *obj, uint32_t line_count);
-void	parse_smooth(char** tokens, t_obj *obj, uint32_t line_count);
-
+void			parse_index(char **tokens, t_obj *obj, uint32_t line_count);
+void			parse_vertex_normal(char **tokens, t_obj *obj,
+													uint32_t line_count);
+void			parse_vertex(char **tokens, t_obj *obj, uint32_t line_count);
+void			parse_object(char **tokens, t_obj *obj, uint32_t line_count);
+void			parse_usemtl(char **tokens, t_obj *obj, uint32_t line_count);
+void			parse_mtllib(char **tokens, t_obj *obj, uint32_t line_count);
+void			parse_smooth(char **tokens, t_obj *obj, uint32_t line_count);
 
 /*
 ** Error handle
 */
 
-void	throw_parsing_error(uint32_t line_count, char *token, char *msg);
-void	throw_parsing_warning(uint32_t line_count, char *token);
+void			throw_parsing_error(uint32_t line_count,
+										char *token, char *msg);
+void			throw_parsing_warning(uint32_t line_count, char *token);
 
 /*
 ** Utils
 */
 
-int32_t	find_str_in_array(char** arr, char* to_find);
-void	free_2d_arr(char **arr);
+int32_t			find_str_in_array(char **arr, char *to_find);
+void			free_2d_arr(char **arr);
 
 #endif

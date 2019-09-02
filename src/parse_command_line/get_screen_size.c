@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_screen_size.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 16:19:51 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/08/25 22:04:50 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/09/02 14:16:13 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ static void	set_dimention(uint32_t *size, char *str_size)
 		*size = int_size;
 	else
 		ft_printf(YEL"WARNING: "RESET
-			"Size must be an integer from 300 to 6000, set to fullscreen. (--help)\n");
+			"Size must be an integer from 300 to 6000, "
+			"set to fullscreen. (--help)\n");
 }
 
-void		get_screen_size(t_gl_env *env, t_obj *obj, int *curr_arg, char *param_name)
+void		get_screen_size(t_gl_env *env, t_obj *obj,
+							int *curr_arg, char *param_name)
 {
 	char	*param;
 	char	**sizes;

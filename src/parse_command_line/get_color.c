@@ -6,11 +6,15 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 14:46:02 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/08/25 15:54:47 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/02 14:10:35 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+/*
+** TODO test this
+*/
 
 static t_vec4	hex_color_to_vec4(const char *hex_color)
 {
@@ -27,19 +31,20 @@ static t_vec4	hex_color_to_vec4(const char *hex_color)
 				"Unexpected symbol [%c]. (--help)\n", hex_color[i]));
 		if ((i + 1) % 2 == 0)
 		{
-			res[(i + 1) / 2] += ft_isdigit(hex_color[i]) 
+			res[(i) / 2] += ft_isdigit(hex_color[i])
 				? hex_color[i] - 48
 				: ft_toupper(hex_color[i]) - 55;
-			res[(i + 1) / 2] += (ft_isdigit(hex_color[i - 1]) 
+			res[(i) / 2] += (ft_isdigit(hex_color[i - 1])
 				? hex_color[i - 1] - 48
 				: ft_toupper(hex_color[i - 1]) - 55) * 16;
-			res[(i + 1) / 2] /= 255;
+			res[(i) / 2] /= 255;
 		}
 	}
-	return res;
+	return (res);
 }
 
-void			get_color(t_gl_env *env, t_obj *obj, int *curr_arg, char *param_name)
+void			get_color(t_gl_env *env, t_obj *obj,
+										int *curr_arg, char *param_name)
 {
 	char *trimmed_name;
 

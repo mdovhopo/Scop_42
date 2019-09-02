@@ -8,6 +8,7 @@ layout (location = 1) in vec4 a_normal;
 out vec4 normal;
 out vec4 frag_pos;
 out vec2 tex_coord;
+out vec4 local_pos;
 
 uniform mat4 u_model;
 uniform mat4 u_view;
@@ -17,5 +18,5 @@ void main() {
 	gl_Position = u_proj * u_view * u_model * a_pos;
 	frag_pos = u_model * a_pos; 
 	normal = u_model * a_normal;
-	// tex_coord = (u_proj * a_pos).xy;
+	local_pos = a_pos;
 }

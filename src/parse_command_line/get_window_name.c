@@ -6,13 +6,14 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 17:39:54 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/08/24 18:00:33 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/02 14:10:57 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void	get_window_name(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name)
+void	get_window_name(t_gl_env *env, t_obj *obj,
+										int *curr_arg, char *parm_name)
 {
 	char *trimmed_name;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_shader_propram.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 21:29:20 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/07/11 21:56:39 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/09/02 14:26:04 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,28 @@
 
 bool	create_shader_prog(uint32_t *prog)
 {
-	char		*vertShaderCode;
-	char		*fragShaderCode;
-	uint32_t	vertShaderId;
-	uint32_t	fragShaderId;
-	uint32_t	shaderProg;
-	fragShaderCode = ft_read_file(FRAGMENT_SHADER_PATH);
-	vertShaderCode = ft_read_file(VERTEX_SHADER_PATH);
+	char		*vert_shader_src;
+	char		*frag_shader_src;
+	uint32_t	vart_shader_id;
+	uint32_t	frag_shader_id;
+	uint32_t	shader_prog;
 
-	// Compile shaders
-	if(!compile_shader(&vertShaderId, vertShaderCode, GL_VERTEX_SHADER, VERTEX_SHADER_PATH))
+	frag_shader_src = ft_read_file(FRAGMENT_SHADER_PATH);
+	vert_shader_src = ft_read_file(VERTEX_SHADER_PATH);
+	if (!compile_shader(&vart_shader_id, vert_shader_src,
+									GL_VERTEX_SHADER, VERTEX_SHADER_PATH))
 		return (false);
-	if (!compile_shader(&fragShaderId, fragShaderCode, GL_FRAGMENT_SHADER, FRAGMENT_SHADER_PATH))
+	if (!compile_shader(&frag_shader_id, frag_shader_src,
+									GL_FRAGMENT_SHADER, FRAGMENT_SHADER_PATH))
 		return (false);
-	free(vertShaderCode);
-	free(fragShaderCode);
-	// Link Program
-	if (!link_shader_prog(&shaderProg, (uint32_t[]){vertShaderId, fragShaderId}, 2))
+	free(vert_shader_src);
+	free(frag_shader_src);
+	if (!link_shader_prog(&shader_prog,
+						(uint32_t[]){vart_shader_id, frag_shader_id}, 2))
 		return (false);
-	glDeleteShader(vertShaderId);
-	glDeleteShader(fragShaderId);  
-	glUseProgram(shaderProg);
-	*prog = shaderProg;
+	glDeleteShader(vart_shader_id);
+	glDeleteShader(frag_shader_id);
+	glUseProgram(shader_prog);
+	*prog = shader_prog;
 	return (true);
 }
