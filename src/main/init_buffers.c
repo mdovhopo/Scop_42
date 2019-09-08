@@ -6,27 +6,11 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:37:24 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/09/02 14:57:50 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 16:57:57 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
-
-void	init_buffers_for_floor(t_gl_env *e)
-{
-	uint32_t vbo;
-	uint32_t ebo;
-
-	return ;
-	glGenVertexArrays(1, &(e->vao_floor));
-	glBindVertexArray(e->vao_floor);
-	glGenBuffers(1, &vbo);
-	glGenBuffers(1, &ebo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, NULL, NULL, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 4, 0);
-	glEnableVertexAttribArray(0);
-}
 
 void	init_buffers_for_textures(t_obj *obj)
 {
@@ -59,6 +43,5 @@ void	init_buffers(t_obj *obj, t_gl_env *e)
 					sizeof(t_vertex), (void*)(sizeof(t_vec4)));
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
-	init_buffers_for_floor(e);
 	init_buffers_for_textures(obj);
 }

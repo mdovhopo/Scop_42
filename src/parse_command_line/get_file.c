@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 17:06:41 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/09/02 14:11:31 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 17:30:57 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	get_file(t_gl_env *env, t_obj *obj, int *curr_arg, char *parm_name)
 {
 	size_t	name_len;
 
+	(void)obj;
 	*curr_arg += 1;
 	if (parm_name == NULL)
 		exit(ft_printf(RED"ERROR: "RESET

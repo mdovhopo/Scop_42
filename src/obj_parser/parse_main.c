@@ -6,13 +6,13 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 12:07:04 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/25 17:51:47 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 16:55:35 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-const char *first_tokens[] = {
+const char *g_first_tokens[] = {
 	"v",
 	"vn",
 	"f",
@@ -23,7 +23,7 @@ const char *first_tokens[] = {
 	NULL
 };
 
-void (*line_parsers[])(char** tokens, t_obj *obj, uint32_t line_count) = {
+void (*g_line_parsers[])(char **tokens, t_obj *obj, uint32_t line_count) = {
 	&parse_vertex,
 	&parse_vertex_normal,
 	&parse_index,
@@ -35,32 +35,29 @@ void (*line_parsers[])(char** tokens, t_obj *obj, uint32_t line_count) = {
 
 void	parse_obj_file(const char *path, t_obj *obj)
 {
-	char		*line;
-	uint32_t	line_count = 1;
-	int			status;
+	char			*line;
+	static uint32_t	line_count = 1;
+	t_first_token	token_id;
+	char			**tokens;
+	char			*trimmed_line;
 
-	line_count = 1;
 	line = NULL;
-	while((status = ft_read_next_line(path, &line)) > 0)
+	while (ft_read_next_line(path, &line) > 0)
 	{
-		char *trimmed_line = ft_strtrim(line);
-		// printf("[%d] -%s\n", line_count, trimmed_line);
+		trimmed_line = ft_strtrim(line);
 		free(line);
-		if (*trimmed_line == '#' || *trimmed_line == 0 || *trimmed_line == '\n') {
+		if (*trimmed_line == '#' || *trimmed_line == 0 || *trimmed_line == '\n')
+		{
 			free(trimmed_line);
 			line_count++;
 			continue;
 		}
-		char **tokens = ft_strsplit(trimmed_line, ' ');
-		t_first_token token_id = find_str_in_array((char**)first_tokens, tokens[0]);
-		if (token_id == UNKNOWN_TOKEN) {}
-			// throw_parsing_warning(line_count, tokens[0]);
-		else
-			line_parsers[token_id](tokens + 1, obj, line_count);
+		tokens = ft_strsplit(trimmed_line, ' ');
+		token_id = find_str_in_array((char**)g_first_tokens, tokens[0]);
+		if (token_id != UNKNOWN_TOKEN)
+			g_line_parsers[token_id](tokens + 1, obj, line_count);
 		line_count++;
 		free_2d_arr(tokens);
 		free(trimmed_line);
 	}
-	if (line_count == 1 || status == -1)
-		exit(1);
 }

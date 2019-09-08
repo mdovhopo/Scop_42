@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getDeltaTime.c                                     :+:      :+:    :+:   */
+/*   get_delta_tine.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 11:41:32 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/09/02 13:50:27 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 17:06:21 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ void	get_delta_time(void)
 	static float last_frame = 0;
 
 	current_frame = glfwGetTime();
-	g_delta_time = current_frame - last_frame;
+	g_dt = current_frame - last_frame;
 	last_frame = current_frame;
 }

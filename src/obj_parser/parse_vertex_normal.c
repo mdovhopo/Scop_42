@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_vertex_normal.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 11:43:14 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/21 16:47:06 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/09/08 16:53:01 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void	parse_vertex_normal(char** tokens, t_obj *obj, uint32_t line_count)
+void	parse_vertex_normal(char **tokens, t_obj *obj, uint32_t line_count)
 {
 	t_vec4	v;
 	int		i;
@@ -30,7 +30,8 @@ void	parse_vertex_normal(char** tokens, t_obj *obj, uint32_t line_count)
 				"Expected no more then 4 float values");
 	}
 	if (i < 3)
-		throw_parsing_error(line_count, tokens[i], 
+		throw_parsing_error(line_count, tokens[i],
 				"Expected at least 3 float values");
-	obj->normals = ft_array_push(obj->normals, &v, sizeof(t_vec4), obj->normals_len++);
+	obj->normals = ft_array_push(obj->normals, &v,
+							sizeof(t_vec4), obj->normals_len++);
 }

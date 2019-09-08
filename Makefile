@@ -6,7 +6,7 @@
 #    By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 15:11:01 by mdovhopo          #+#    #+#              #
-#    Updated: 2019/09/02 14:07:47 by mdovhopo         ###   ########.fr        #
+#    Updated: 2019/09/08 17:33:04 by mdovhopo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIB_DIR			= ./lib
 # Different lib linking for Linux and OSX
 ifeq ($(UNAME_S), Linux)
 	OS_NAME		= Linux
-	LIBS	= -lglfw3 -lGL -lm \
+	LIBS		= -lglfw3 -lGL -lm \
 				-lXrandr  -lX11 \
 				-lXxf86vm -lpthread -ldl
 endif
@@ -45,7 +45,6 @@ STB_IMAGE_PATH	= $(LIB_DIR)/stb_image
 INCLUDE_DIRS   += -I $(LIB_DIR)/glad/include \
 				  -I ./inc \
 				  -I $(LIBFT_PATH)/inc \
-				  -I $(LIB_DIR)/cglm/include \
 				  -I $(STB_IMAGE_PATH)/inc
 
 GLAD_SRC		= $(LIB_DIR)/glad/src/glad.c
@@ -64,7 +63,7 @@ OBJECTS			= $(SOURCES:.c=.o)
 
 INCLUDES		=
 
-CFLAGS 			= -c -Wall -pedantic
+CFLAGS 			= -c -Wall -Wextra -Werror -pedantic
 CC				= clang -g
 EXECUTABLE		= sad_cat
 

@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parse_smooth.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 12:05:37 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/03 12:05:46 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/09/08 17:29:39 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void	parse_smooth(char** tokens, t_obj *obj, uint32_t line_count)
+void	parse_smooth(char **tokens, t_obj *obj, uint32_t line_count)
 {
-	// printf("parse smooth\n");
+	(void)tokens;
+	(void)obj;
+	(void)line_count;
 }

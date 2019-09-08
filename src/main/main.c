@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 16:25:29 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/09/02 14:52:03 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 17:28:50 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ int		main(int argc, char **argv)
 	if (create_shader_prog(&(env.shader_prog)))
 	{
 		create_camera(&env, &cam, &obj);
-		load_camera_projection(&cam, 45.0f,
-					CAMERA_PERSPECTIVE, VEC2(0.1f, 10000.0f));
+		load_camera_projection(&cam, 45.0f, VEC2(0.1f, 10000.0f));
 		if (glGetError() != GL_NO_ERROR)
 			ft_printf("WARNING glError: %d", glGetError());
 		render_loop(&env, &cam, &obj);

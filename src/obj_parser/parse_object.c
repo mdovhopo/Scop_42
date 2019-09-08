@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parse_object.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tryckylake <tryckylake@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 12:05:10 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/08/03 12:05:24 by tryckylake       ###   ########.fr       */
+/*   Updated: 2019/09/08 17:29:29 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void	parse_object(char** tokens, t_obj *obj, uint32_t line_count)
+void	parse_object(char **tokens, t_obj *obj, uint32_t line_count)
 {
-	// printf("parse object\n");
+	(void)tokens;
+	(void)obj;
+	(void)line_count;
 }

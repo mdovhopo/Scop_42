@@ -6,14 +6,13 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 14:31:21 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/09/02 14:31:41 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 17:26:56 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void	load_camera_projection(t_camera *cam, float fov,
-								t_camera_type type, t_vec4 near_far)
+void	load_camera_projection(t_camera *cam, float fov, t_vec4 near_far)
 {
 	t_mat4	proj;
 	float	aspect;

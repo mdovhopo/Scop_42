@@ -6,15 +6,11 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 14:46:02 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/09/02 14:10:35 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 17:30:30 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
-
-/*
-** TODO test this
-*/
 
 static t_vec4	hex_color_to_vec4(const char *hex_color)
 {
@@ -48,6 +44,7 @@ void			get_color(t_gl_env *env, t_obj *obj,
 {
 	char *trimmed_name;
 
+	(void)env;
 	trimmed_name = ft_strtrim(param_name);
 	*curr_arg += 1;
 	if (trimmed_name == NULL)

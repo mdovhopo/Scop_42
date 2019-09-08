@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 16:19:51 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/09/02 14:16:13 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 17:31:27 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		get_screen_size(t_gl_env *env, t_obj *obj,
 	char	**sizes;
 	int		i;
 
+	(void)obj;
 	param = ft_strtrim(param_name);
 	*curr_arg += 1;
 	if (!param)

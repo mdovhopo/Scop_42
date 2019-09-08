@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 17:39:54 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/09/02 14:10:57 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 17:32:52 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	get_window_name(t_gl_env *env, t_obj *obj,
 {
 	char *trimmed_name;
 
+	(void)obj;
 	trimmed_name = ft_strtrim(parm_name);
 	*curr_arg += 1;
 	if (trimmed_name[0] == '\0')

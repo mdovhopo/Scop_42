@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 22:21:38 by tryckylake        #+#    #+#             */
-/*   Updated: 2019/09/02 14:17:20 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 17:33:56 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <glad/glad.h>
 # include <GLFW/glfw3.h>
 
-extern float g_delta_time;
+extern float g_dt;
 
 extern float g_pitch;
 extern float g_yaw;
@@ -50,7 +50,6 @@ typedef struct	s_gl_env
 	uint32_t	w_height;
 	uint32_t	shader_prog;
 	uint32_t	vao_object;
-	uint32_t	vao_floor;
 	char		*obj_file_name;
 	char		*window_name;
 }				t_gl_env;
@@ -74,12 +73,6 @@ typedef struct	s_camera
 
 }				t_camera;
 
-typedef enum	e_camera_type
-{
-	CAMERA_PERSPECTIVE = 0x01,
-	CAMERA_ORTHOGRAPHIC = 0x02
-}				t_camera_type;
-
 /*
 ** Init enviroment
 */
@@ -99,8 +92,8 @@ void			init_buffers(t_obj *obj, t_gl_env *e);
 */
 
 void			create_camera(t_gl_env *env, t_camera *cam, t_obj *obj);
-void			load_camera_projection(t_camera *cam, float fov,
-								t_camera_type type, t_vec4 near_far);
+void			load_camera_projection(t_camera *cam,
+									float fov, t_vec4 near_far);
 
 /*
 ** Main Render
@@ -150,5 +143,11 @@ void			get_screen_size(t_gl_env *env, t_obj *obj,
 											int *curr_arg, char *parm_name);
 void			get_texture(t_gl_env *env, t_obj *obj,
 											int *curr_arg, char *parm_name);
+
+/*
+**	Events handler
+*/
+
+void			process_input(GLFWwindow *window, t_camera *cam, t_obj *obj);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 11:48:44 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/09/02 14:51:05 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 17:28:38 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ float	g_object_scale = 1.0f;
 
 void	scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
+	(void)window;
+	(void)xoffset;
 	if (yoffset)
 	{
 		if (yoffset < 0)
@@ -30,7 +32,7 @@ float	g_pitch = 0;
 float	g_last_x = 400;
 float	g_last_y = 300;
 
-float	g_delta_time = 0.0f;
+float	g_dt = 0.0f;
 
 bool	g_first_mouse = true;
 
@@ -39,6 +41,7 @@ void	mouse_callback(GLFWwindow *window, double xpos, double ypos)
 	float xoffset;
 	float yoffset;
 
+	(void)window;
 	if (g_first_mouse)
 	{
 		g_last_x = xpos;

@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 12:18:00 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/09/02 14:15:24 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/09/08 17:31:49 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	get_texture(t_gl_env *env, t_obj *obj,
 	int		nr_channels;
 
 	*curr_arg += 1;
+	(void)env;
 	if (!parm_name)
 		exit(ft_printf(RED"ERROR: "RESET
 				"You must specify file name. (--help)\n"));
