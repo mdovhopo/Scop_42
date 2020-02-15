@@ -6,7 +6,7 @@
 #    By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 15:11:01 by mdovhopo          #+#    #+#              #
-#    Updated: 2019/09/08 17:33:04 by mdovhopo         ###   ########.fr        #
+#    Updated: 2019/11/10 16:24:36 by mdovhopo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,9 +63,9 @@ OBJECTS			= $(SOURCES:.c=.o)
 
 INCLUDES		=
 
-CFLAGS 			= -c -Wall -Wextra -Werror -pedantic
+CFLAGS 			= -c #-Wall -Wextra -Werror -pedantic
 CC				= clang -g
-EXECUTABLE		= sad_cat
+EXECUTABLE		= scop
 
 .PHONY: all clean
 

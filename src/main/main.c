@@ -6,7 +6,7 @@
 /*   By: mdovhopo <mdovhopo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 16:25:29 by mdovhopo          #+#    #+#             */
-/*   Updated: 2019/09/08 17:28:50 by mdovhopo         ###   ########.fr       */
+/*   Updated: 2019/11/10 16:23:58 by mdovhopo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ int		main(int argc, char **argv)
 		render_loop(&env, &cam, &obj);
 	}
 	clean_up(&env, &obj);
+	system("leaks -q sco");
 	return (0);
 }

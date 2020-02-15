@@ -15,9 +15,6 @@ You can install those for Linux Ubuntu 18.04 by
 
 for MacOs there is compiled version of glfw
 
-## TODO
- remove glwf source code from project
-
 ## Compile
 
 First you need to obtain copy of this repository
